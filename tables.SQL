@@ -18,7 +18,7 @@ CREATE TABLE Bid (id INTEGER,
 
 CREATE TABLE Makes(aid INTEGER,
        bid INTEGER,
-        PRIMARY KEY(aid, bid),
+        PRIMARY KEY(aid),
         FOREIGN KEY(aid) REFERENCES Account,
         FOREIGN KEY(bid) REFERENCES Bid
 );
@@ -85,7 +85,7 @@ FOREIGN KEY(a_id) references Account
 create table Leaves (
 r_id Integer not NULL,
 a_id Integer not NULL,
-PRIMARY KEY(r_id,a_id),
+PRIMARY KEY(r_id),
 FOREIGN KEY(r_id) references Review,
 FOREIGN KEY(a_id) references Account
 );
@@ -121,14 +121,14 @@ postid INTEGER FOREIGN KEY References Post(postid) NOT NULL,
 accountid INTEGER FOREIGN KEY References Account(accountid) NOT NULL,
 createdon TIMESTAMP NOT NULL DEFAULT NOW,
 updatedon TIMESTAMP NOT NULL DEFAULT NOW,
-PRIMARY KEY (postid, accountid)
+PRIMARY KEY (postid)
 );
 
 CREATE TABLE Fulfills (
 postid INTEGER FOREIGN KEY References Post(postid) NOT NULL,
 accountid INTEGER FOREIGN KEY References Account(accountid) NOT NULL,
 updatedon TIMESTAMP NOT NULL DEFAULT NOW,
-PRIMARY KEY (postid, accountid)
+PRIMARY KEY (postid)
 );
 
 CREATE TABLE BelongsTo (
