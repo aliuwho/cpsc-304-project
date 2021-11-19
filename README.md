@@ -79,11 +79,11 @@ _We will individually integrate the frontend corresponding to our backend tasks 
 
 Time management: working consistently, setting up meetings and coordinating schedules
 Achieving usable functionality of the app while maintaining an appropriate scale (i.e., separating key functionalities from nice-to-haves)
-Equal distribution of work, considering some queries/sections (bids vs. moderator actions vs. listings, for example) are more complex than others
+Equal distribution of work, considering some queries/sections (bids vs. moderator actions vs. listings, for example) are more complex than others.
 
 ## Bonus Features, If Possible
 
-Search posts by keyword
+Search posts by keyword  
 Add photo of item
 
 ---
