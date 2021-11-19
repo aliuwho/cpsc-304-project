@@ -43,12 +43,14 @@ CREATE TABLE Chooses(aid Integer,
         FOREIGN KEY(bid) REFERENCES Bid
 );
 
-CREATE TABLE Ticket (
-    t_id Integer not null, 
+CREATE TABLE WritesTicket (
+    t_id Integer not null,
+    a_id Integer not null, 
     t_subject char(50),
     t_category char(11),
     t_priority boolean, 
-PRIMARY KEY(t_id)
+PRIMARY KEY(t_id),
+FOREIGN KEY(a_id) references Account
 );
 
 create table Flag (
