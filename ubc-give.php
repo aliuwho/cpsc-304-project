@@ -43,15 +43,23 @@
         </form>
 
         <hr />
-        <hr />
+       
 
         <h2>Insert new Listing</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            Number: <input type="text" name="insNo"> <br /><br />
-            Name: <input type="text" name="insName"> <br /><br />
+            <input type="hidden" id="insertListingQueryRequest" name="insertListingQueryRequest">
+            Item: <input type="text" name="insItemL"> <br /><br />
 
-            <input type="submit" value="Insert" name="insertSubmit"></p>
+            <input type="submit" value="InsertListing" name="insertListingSubmit"></p>
+        </form>
+
+        <hr />
+        <h2>Insert new Review</h2>
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertListingQueryRequest" name="insertListingQueryRequest">
+            Item: <input type="text" name="insItemL"> <br /><br />
+
+            <input type="submit" value="InsertReview" name="insertListingSubmit"></p>
         </form>
 
         <hr />
@@ -240,7 +248,24 @@
                 $tuple
             );
 
+
             executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+            OCICommit($db_conn);
+        }
+        function handleInsertListingRequest() {
+            global $db_conn;
+
+            //Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bindx" => $_POST['insItem']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+            
+
+            executeBoundSQL("insert into demoTable values (:bindx,abc)", $alltuples);
             OCICommit($db_conn);
         }
 
@@ -264,6 +289,8 @@
                     handleUpdateRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
                     handleInsertRequest();
+                } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
+                    handleInsertListingRequest();
                 }
 
                 disconnectFromDB();
@@ -282,7 +309,7 @@
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
+		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest'])) {
             handleGETRequest();
