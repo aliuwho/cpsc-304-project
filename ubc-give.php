@@ -43,15 +43,23 @@
         </form>
 
         <hr />
-        <hr />
+       
 
         <h2>Insert new Listing</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            Number: <input type="text" name="insNo"> <br /><br />
-            Name: <input type="text" name="insName"> <br /><br />
+            <input type="hidden" id="insertListingQueryRequest" name="insertListingQueryRequest">
+            Item: <input type="text" name="insItemL"> <br /><br />
 
-            <input type="submit" value="Insert" name="insertSubmit"></p>
+            <input type="submit" value="InsertListing" name="insertListingSubmit"></p>
+        </form>
+
+        <hr />
+        <h2>Insert new Review</h2>
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertListingQueryRequest" name="insertListingQueryRequest">
+            Item: <input type="text" name="insItemL"> <br /><br />
+
+            <input type="submit" value="InsertReview" name="insertListingSubmit"></p>
         </form>
 
         <hr />
@@ -201,20 +209,26 @@
             global $db_conn;
             // Drop old tables
             executePlainSQL("DROP TABLE Account");
-            executePlainSQL("DROP TABLE Moderator");
             executePlainSQL("DROP TABLE Bid");
-            executePlainSQL("DROP TABLE Ticket");
+            executePlainSQL("DROP TABLE Makes");
+            executePlainSQL("DROP TABLE Resolves");
+            executePlainSQL("DROP TABLE Suspends");
+            executePlainSQL("DROP TABLE Chooses");
+            executePlainSQL("DROP TABLE WritesTicket");
             executePlainSQL("DROP TABLE Flag");
             executePlainSQL("DROP TABLE Broadcast");
             executePlainSQL("DROP TABLE Review");
             executePlainSQL("DROP TABLE Receives");
+            executePlainSQL("DROP TABLE Leaves");
             executePlainSQL("DROP TABLE Category");
             executePlainSQL("DROP TABLE Post");
             executePlainSQL("DROP TABLE Listing");
             executePlainSQL("DROP TABLE Request");
+            executePlainSQL("DROP TABLE Creates");
+            executePlainSQL("DROP TABLE Fulfills");
             executePlainSQL("DROP TABLE BelongsTo");
             executePlainSQL("DROP TABLE Suggests");
-            executePlainSQL("DROP TABLE LocationAddress");
+            executePlainSQL("DROP TABLE Address");
             executePlainSQL("DROP TABLE Pickup");
 
             // Create new table
@@ -223,7 +237,7 @@
 
             // Add tuples
             echo "<br> filling tables <br>";
-            executePlainSQL("start tuples.SQL");
+            executePlainSQL("start tables.SQL");
             OCICommit($db_conn);
         }
 
@@ -240,7 +254,24 @@
                 $tuple
             );
 
+
             executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+            OCICommit($db_conn);
+        }
+        function handleInsertListingRequest() {
+            global $db_conn;
+
+            //Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bindx" => $_POST['insItem']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+            
+
+            executeBoundSQL("insert into demoTable values (:bindx,abc)", $alltuples);
             OCICommit($db_conn);
         }
 
@@ -264,6 +295,8 @@
                     handleUpdateRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
                     handleInsertRequest();
+                } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
+                    handleInsertListingRequest();
                 }
 
                 disconnectFromDB();
@@ -282,7 +315,7 @@
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
+		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest'])) {
             handleGETRequest();
