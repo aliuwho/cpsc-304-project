@@ -56,10 +56,17 @@
         <hr />
         <h2>Insert new Review</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertListingQueryRequest" name="insertListingQueryRequest">
+            <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
             Item: <input type="text" name="insItemL"> <br /><br />
-
-            <input type="submit" value="InsertReview" name="insertListingSubmit"></p>
+                    <div class="dropdown">
+                         <button class="dropbtn">Dropdown</button>
+                        <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                    </div>
+            <input type="submit" value="InsertReview" name="insertReviewSubmit"></p>
         </form>
 
         <hr />
@@ -263,8 +270,18 @@
             $alltuples = array (
                 $tuple
             );
-            
+        function handleReviewRequest() {
+            global $db_conn;
 
+            //Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bindx" => $_POST['insItem']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+            
             executeBoundSQL("insert into demoTable values (:bindx,abc)", $alltuples);
             OCICommit($db_conn);
         }
@@ -291,6 +308,9 @@
                     handleInsertRequest();
                 } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
                     handleInsertListingRequest();
+                }
+                } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
+                    handleReviewRequest();
                 }
 
                 disconnectFromDB();
