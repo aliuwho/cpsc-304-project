@@ -83,7 +83,7 @@ CREATE TABLE Post (
         created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         expiration TIMESTAMP NOT NULL,
-        post_status VARCHAR(10) NOT NULL,
+        post_status VARCHAR(20) NOT NULL,
         PRIMARY KEY(post_id),
         FOREIGN KEY (account_id) REFERENCES Account
 );
