@@ -35,7 +35,7 @@ CREATE TABLE Ticket (
         aid INTEGER NOT NULL,
         mid INTEGER DEFAULT 0,
         t_subject VARCHAR(50),
-        t_category VARCHAR(11),
+        t_category VARCHAR(30),
         t_priority INTEGER DEFAULT 0,
         created_on DATE DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(tid),
