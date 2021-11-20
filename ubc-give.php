@@ -58,14 +58,15 @@
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
             Item: <input type="text" name="insItemL"> <br /><br />
-                    <div class="dropdown">
-                         <button class="dropbtn">Dropdown</button>
-                        <div class="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
-                    </div>
-                    </div>
+            Description: <input type="text" name="insItem"> <br /><br />
+            <label>DropDownList Status</label>
+            <select name ="status">
+                <option value=""> --Select--</option>
+                <option value="POST"> POST </option>
+                <option value="GET"> GET </option>
+                <option value="PUT"> PUT </option>
+                <option value="PATCH"> PATCH </option>
+                <option value="DELETE"> DELETE </option>
             <input type="submit" value="InsertReview" name="insertReviewSubmit"></p>
         </form>
 
