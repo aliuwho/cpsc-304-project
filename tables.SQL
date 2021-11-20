@@ -37,13 +37,14 @@ CREATE TABLE Ticket (
         t_subject VARCHAR(50),
         t_category VARCHAR(11),
         t_priority INTEGER DEFAULT 0,
+        created_on DATE DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(tid),
         FOREIGN KEY(aid) REFERENCES Account,
         FOREIGN KEY(mid) REFERENCES Moderator
 );
 create table Flag (
         f_id Integer,
-        f_date VARCHAR(20),
+        f_date DATE DEFAULT CURRENT_TIMESTAMP,
         f_description VARCHAR(200),
         aid INTEGER NOT NULL,
         mid INTEGER NOT NULL,
