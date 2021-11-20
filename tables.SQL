@@ -1,17 +1,17 @@
+DROP TABLE Suggests;
 DROP TABLE Pickup;
 DROP TABLE LocationAddress;
-DROP TABLE Suggests;
 DROP TABLE BelongsTo;
-DROP TABLE Request;
-DROP TABLE Listing;
-DROP TABLE Post;
-DROP TABLE Category;
+DROP TABLE Bid;
 DROP TABLE Receives;
 DROP TABLE Review;
 DROP TABLE Broadcast;
 DROP TABLE Flag;
 DROP TABLE Ticket;
-DROP TABLE Bid;
+DROP TABLE Category;
+DROP TABLE Request;
+DROP TABLE Listing;
+DROP TABLE Post;
 DROP TABLE Moderator;
 DROP TABLE Account;
 CREATE TABLE Account (
@@ -26,35 +26,25 @@ CREATE TABLE Account (
 CREATE TABLE Moderator (
         id INTEGER,
         PRIMARY KEY(id),
-        welcome_message VARCHAR(100) DEFAULT "Welcome, dear moderator!",
-        promotion_date TIMESTAMP DEFAULT NOW,
+        welcome_message VARCHAR(100) DEFAULT 'Welcome, dear moderator!',
+        promotion_date DATE DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(id) REFERENCES Account
 );
-CREATE TABLE Bid (
-        id INTEGER,
-        message VARCHAR(120),
-        lid INTEGER,
-        aid INTEGER,
-        chosen INTEGER DEFAULT 0,
-        FOREIGN KEY(aid) REFERENCES Account NOT NULL,
-        FOREIGN KEY(lid) REFERENCES Listing NOT NULL,
-        PRIMARY KEY(id)
-);
 CREATE TABLE Ticket (
-        tid Integer,
-        aid Integer NOT NULL,
-        mid Integer DEFAULT 0,
-        t_subject char(50),
-        t_category char(11),
-        t_priority boolean,
+        tid INTEGER,
+        aid INTEGER NOT NULL,
+        mid INTEGER DEFAULT 0,
+        t_subject VARCHAR(50),
+        t_category VARCHAR(11),
+        t_priority INTEGER DEFAULT 0,
         PRIMARY KEY(tid),
         FOREIGN KEY(aid) REFERENCES Account,
         FOREIGN KEY(mid) REFERENCES Moderator
 );
 create table Flag (
         f_id Integer,
-        f_date char(20),
-        f_description char(200),
+        f_date VARCHAR(20),
+        f_description VARCHAR(200),
         aid INTEGER NOT NULL,
         mid INTEGER NOT NULL,
         FOREIGN KEY(aid) REFERENCES Account,
@@ -63,24 +53,24 @@ create table Flag (
 );
 create table Broadcast (
         b_id Integer,
-        b_message char(200),
-        b_date char(20),
-        b_time char (11),
+        b_message VARCHAR(200),
+        b_date VARCHAR(20),
+        b_time VARCHAR(11),
         PRIMARY KEY(b_id)
 );
 create table Review (
         r_id Integer,
         receiver_id Integer NOT NULL,
         poster_id Integer NOT NULL,
-        r_description char(200),
-        r_time datetime(11),
+        r_description VARCHAR(200),
+        r_time DATE DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(r_id, receiver_id),
         FOREIGN KEY(receiver_id) REFERENCES Account,
-        FOREIGN KEY(poster_id) REFERENCES Account,
+        FOREIGN KEY(poster_id) REFERENCES Account
 );
 create table Receives (
-        b_id char(11) not NULL,
-        a_id char(11) not NULL,
+        b_id INTEGER not NULL,
+        a_id INTEGER not NULL,
         PRIMARY KEY(b_id, a_id),
         FOREIGN KEY(b_id) REFERENCES Broadcast,
         FOREIGN KEY(a_id) REFERENCES Account
@@ -90,51 +80,65 @@ CREATE TABLE Post (
         post_id INTEGER,
         post_type VARCHAR(10) NOT NULL,
         account_id INTEGER NOT NULL,
-        created_on TIMESTAMP NOT NULL DEFAULT NOW,
-        updated_on TIMESTAMP NOT NULL DEFAULT NOW,
-        expiration DATETIME NOT NULL,
+        created_on DATE DEFAULT CURRENT_TIMESTAMP,
+        updated_on DATE DEFAULT CURRENT_TIMESTAMP,
+        expiration DATE NOT NULL,
         post_status VARCHAR(10) NOT NULL,
         PRIMARY KEY(post_id),
-        FOREIGN KEY (account_id) REFERENCES Account(account_id)
+        FOREIGN KEY (account_id) REFERENCES Account
 );
-) CREATE TABLE Listing (
+CREATE TABLE Listing (
         post_id INTEGER,
-        FOREIGN KEY(post_id) REFERENCES Post,
         item VARCHAR(50) NOT NULL,
-        PRIMARY KEY(postid)
+        PRIMARY KEY(post_id),
+        FOREIGN KEY(post_id) REFERENCES Post
 );
 CREATE TABLE Request (
         post_id INTEGER NOT NULL,
         post_description VARCHAR(50) NOT NULL,
-        expiration DATETIME NOT NULL,
+        expiration DATE NOT NULL,
         fulfilled INTEGER DEFAULT 0,
         fulfilled_on TIMESTAMP,
         fulfilled_id INTEGER DEFAULT 0,
         PRIMARY KEY(post_id),
         FOREIGN KEY(post_id) REFERENCES Post,
-        FOREIGN KEY (fulfilled_id) REFERENCES Account
+        FOREIGN KEY(fulfilled_id) REFERENCES Account
+);
+CREATE TABLE Bid (
+        id INTEGER,
+        message VARCHAR(120),
+        lid INTEGER NOT NULL,
+        aid INTEGER NOT NULL,
+        chosen INTEGER DEFAULT 0,
+        PRIMARY KEY(id),
+        FOREIGN KEY(aid) REFERENCES Account,
+        FOREIGN KEY(lid) REFERENCES Listing
 );
 CREATE TABLE BelongsTo (
         post_id INTEGER NOT NULL,
-        FOREIGN KEY(post_id) REFERENCES Post,
         category VARCHAR(20) NOT NULL,
-        PRIMARY KEY(post_id, category)
-);
-CREATE TABLE Suggests (
-        postid FOREIGN KEY REFERENCES Post(postid) NOT NULL,
-        pickupid FOREIGN KEY REFERENCES Pickup(pickupid) NOT NULL,
-        suggestedtime DATETIME NOT NULL,
-        PRIMARY KEY(postid, pickupid, suggestedtime)
+        PRIMARY KEY(post_id, category),
+        FOREIGN KEY(post_id) REFERENCES Post
 );
 CREATE TABLE LocationAddress (
         streetname VARCHAR(30) NOT NULL,
         streetno INTEGER,
         postalcode VARCHAR(6) NOT NULL,
-        PRIMARY KEY (streetname, streetno)
+        PRIMARY KEY(streetname, streetno)
 );
 CREATE TABLE Pickup (
-        pickupid INTEGER PRIMARY KEY NOT NULL,
+        pickupid INTEGER,
         description VARCHAR(100) NOT NULL,
-        streetname FOREIGN KEY REFERENCES Address(streetname) NOT NULL,
-        streetno FOREIGN KEY REFERENCES Address(streetno)
+        streetname NOT NULL,
+        streetno NOT NULL,
+        PRIMARY KEY(pickupid),
+        FOREIGN KEY(streetname, streetno) REFERENCES LocationAddress
+);
+CREATE TABLE Suggests (
+        post_id INTEGER,
+        pickup_id INTEGER,
+        suggested_time DATE,
+        PRIMARY KEY(post_id, pickup_id, suggested_time),
+        FOREIGN KEY(post_id) REFERENCES Post,
+        FOREIGN KEY(pickup_id) REFERENCES Pickup
 );
