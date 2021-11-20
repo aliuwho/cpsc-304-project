@@ -166,7 +166,7 @@
 
             // Your username is ora_(CWL_ID) and the password is a(student number). For example, 
 			// ora_platypus is the username and a12345678 is the password.
-            $db_conn = OCILogon("kthukral", "a69843365", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_aimyul", "a12757563", "dbhost.students.cs.ubc.ca:1522/stu");
 
             if ($db_conn) {
                 debugAlertMessage("Database is Connected");
@@ -199,12 +199,37 @@
 
         function handleResetRequest() {
             global $db_conn;
-            // Drop old table
-            executePlainSQL("DROP TABLE demoTable");
+            // Drop old tables
+            executePlainSQL("DROP TABLE Account");
+            executePlainSQL("DROP TABLE Bid");
+            executePlainSQL("DROP TABLE Makes");
+            executePlainSQL("DROP TABLE Resolves");
+            executePlainSQL("DROP TABLE Suspends");
+            executePlainSQL("DROP TABLE Chooses");
+            executePlainSQL("DROP TABLE WritesTicket");
+            executePlainSQL("DROP TABLE Flag");
+            executePlainSQL("DROP TABLE Broadcast");
+            executePlainSQL("DROP TABLE Review");
+            executePlainSQL("DROP TABLE Receives");
+            executePlainSQL("DROP TABLE Leaves");
+            executePlainSQL("DROP TABLE Category");
+            executePlainSQL("DROP TABLE Post");
+            executePlainSQL("DROP TABLE Listing");
+            executePlainSQL("DROP TABLE Request");
+            executePlainSQL("DROP TABLE Creates");
+            executePlainSQL("DROP TABLE Fulfills");
+            executePlainSQL("DROP TABLE BelongsTo");
+            executePlainSQL("DROP TABLE Suggests");
+            executePlainSQL("DROP TABLE Address");
+            executePlainSQL("DROP TABLE Pickup");
 
             // Create new table
             echo "<br> creating new table <br>";
-            executePlainSQL("CREATE TABLE demoTable (id int PRIMARY KEY, name char(30))");
+            executePlainSQL("start tables.SQL");
+
+            // Add tuples
+            echo "<br> filling tables <br>";
+            executePlainSQL("start tables.SQL");
             OCICommit($db_conn);
         }
 
