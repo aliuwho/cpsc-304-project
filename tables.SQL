@@ -137,7 +137,7 @@ CREATE TABLE Pickup (
 CREATE TABLE Suggests (
         post_id INTEGER,
         pickup_id INTEGER,
-        suggested_time DATE,
+        suggested_time TIMESTAMP,
         PRIMARY KEY(post_id, pickup_id, suggested_time),
         FOREIGN KEY(post_id) REFERENCES Post,
         FOREIGN KEY(pickup_id) REFERENCES Pickup
