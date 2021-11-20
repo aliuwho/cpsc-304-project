@@ -209,26 +209,20 @@
             global $db_conn;
             // Drop old tables
             executePlainSQL("DROP TABLE Account");
+            executePlainSQL("DROP TABLE Moderator");
             executePlainSQL("DROP TABLE Bid");
-            executePlainSQL("DROP TABLE Makes");
-            executePlainSQL("DROP TABLE Resolves");
-            executePlainSQL("DROP TABLE Suspends");
-            executePlainSQL("DROP TABLE Chooses");
-            executePlainSQL("DROP TABLE WritesTicket");
+            executePlainSQL("DROP TABLE Ticket");
             executePlainSQL("DROP TABLE Flag");
             executePlainSQL("DROP TABLE Broadcast");
             executePlainSQL("DROP TABLE Review");
             executePlainSQL("DROP TABLE Receives");
-            executePlainSQL("DROP TABLE Leaves");
             executePlainSQL("DROP TABLE Category");
             executePlainSQL("DROP TABLE Post");
             executePlainSQL("DROP TABLE Listing");
             executePlainSQL("DROP TABLE Request");
-            executePlainSQL("DROP TABLE Creates");
-            executePlainSQL("DROP TABLE Fulfills");
             executePlainSQL("DROP TABLE BelongsTo");
             executePlainSQL("DROP TABLE Suggests");
-            executePlainSQL("DROP TABLE Address");
+            executePlainSQL("DROP TABLE LocationAddress");
             executePlainSQL("DROP TABLE Pickup");
 
             // Create new table
@@ -237,7 +231,7 @@
 
             // Add tuples
             echo "<br> filling tables <br>";
-            executePlainSQL("start tables.SQL");
+            executePlainSQL("start tuples.SQL");
             OCICommit($db_conn);
         }
 
