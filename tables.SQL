@@ -96,7 +96,6 @@ CREATE TABLE Listing (
 CREATE TABLE Request (
         post_id INTEGER NOT NULL,
         post_description VARCHAR(50) NOT NULL,
-        expiration TIMESTAMP NOT NULL,
         fulfilled INTEGER DEFAULT 0,
         fulfilled_on TIMESTAMP,
         fulfilled_id INTEGER DEFAULT 0,
