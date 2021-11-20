@@ -214,25 +214,7 @@
 
         function handleResetRequest() {
             global $db_conn;
-            // Drop old tables
-            executePlainSQL("DROP TABLE Account");
-            executePlainSQL("DROP TABLE Moderator");
-            executePlainSQL("DROP TABLE Bid");
-            executePlainSQL("DROP TABLE Ticket");
-            executePlainSQL("DROP TABLE Flag");
-            executePlainSQL("DROP TABLE Broadcast");
-            executePlainSQL("DROP TABLE Review");
-            executePlainSQL("DROP TABLE Receives");
-            executePlainSQL("DROP TABLE Category");
-            executePlainSQL("DROP TABLE Post");
-            executePlainSQL("DROP TABLE Listing");
-            executePlainSQL("DROP TABLE Request");
-            executePlainSQL("DROP TABLE BelongsTo");
-            executePlainSQL("DROP TABLE Suggests");
-            executePlainSQL("DROP TABLE LocationAddress");
-            executePlainSQL("DROP TABLE Pickup");
-
-            // Create new table
+            // Delete tables and create new tables
             echo "<br> creating new table <br>";
             executePlainSQL("start tables.SQL");
 
