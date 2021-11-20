@@ -117,7 +117,8 @@ CREATE TABLE BelongsTo (
         post_id INTEGER NOT NULL,
         category VARCHAR(20) NOT NULL,
         PRIMARY KEY(post_id, category),
-        FOREIGN KEY(post_id) REFERENCES Post
+        FOREIGN KEY(post_id) REFERENCES Post,
+        FOREIGN KEY(category) REFERENCES Category
 );
 CREATE TABLE LocationAddress (
         streetname VARCHAR(30) NOT NULL,
