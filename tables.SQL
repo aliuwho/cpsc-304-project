@@ -27,7 +27,7 @@ CREATE TABLE Moderator (
         id INTEGER,
         PRIMARY KEY(id),
         welcome_message VARCHAR(100) DEFAULT 'Welcome, dear moderator!',
-        promotion_date DATE DEFAULT CURRENT_TIMESTAMP,
+        promotion_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(id) REFERENCES Account
 );
 CREATE TABLE Ticket (
@@ -37,14 +37,14 @@ CREATE TABLE Ticket (
         t_subject VARCHAR(50),
         t_category VARCHAR(30),
         t_priority INTEGER DEFAULT 0,
-        created_on DATE DEFAULT CURRENT_TIMESTAMP,
+        created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(tid),
         FOREIGN KEY(aid) REFERENCES Account,
         FOREIGN KEY(mid) REFERENCES Moderator
 );
 create table Flag (
         f_id Integer,
-        f_date DATE DEFAULT CURRENT_TIMESTAMP,
+        f_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         f_description VARCHAR(200),
         aid INTEGER NOT NULL,
         mid INTEGER NOT NULL,
@@ -55,8 +55,7 @@ create table Flag (
 create table Broadcast (
         b_id Integer,
         b_message VARCHAR(200),
-        b_date VARCHAR(20),
-        b_time VARCHAR(11),
+        b_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(b_id)
 );
 create table Review (
@@ -64,7 +63,7 @@ create table Review (
         receiver_id Integer NOT NULL,
         poster_id Integer NOT NULL,
         r_description VARCHAR(200),
-        r_time DATE DEFAULT CURRENT_TIMESTAMP,
+        r_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(r_id, receiver_id),
         FOREIGN KEY(receiver_id) REFERENCES Account,
         FOREIGN KEY(poster_id) REFERENCES Account
@@ -81,9 +80,9 @@ CREATE TABLE Post (
         post_id INTEGER,
         post_type VARCHAR(10) NOT NULL,
         account_id INTEGER NOT NULL,
-        created_on DATE DEFAULT CURRENT_TIMESTAMP,
-        updated_on DATE DEFAULT CURRENT_TIMESTAMP,
-        expiration DATE NOT NULL,
+        created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        expiration TIMESTAMP NOT NULL,
         post_status VARCHAR(10) NOT NULL,
         PRIMARY KEY(post_id),
         FOREIGN KEY (account_id) REFERENCES Account
@@ -97,7 +96,7 @@ CREATE TABLE Listing (
 CREATE TABLE Request (
         post_id INTEGER NOT NULL,
         post_description VARCHAR(50) NOT NULL,
-        expiration DATE NOT NULL,
+        expiration TIMESTAMP NOT NULL,
         fulfilled INTEGER DEFAULT 0,
         fulfilled_on TIMESTAMP,
         fulfilled_id INTEGER DEFAULT 0,
