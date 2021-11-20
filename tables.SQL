@@ -38,7 +38,7 @@ FOREIGN KEY(mid) references Moderator
 
 create table Flag (
     f_id Integer IDENTITY(1,1),
-    f_date char(20),
+    f_date TIMESTAMP DEFAULT NOW,
     f_description char(200),
     aid INTEGER NOT NULL,
     mid INTEGER NOT NULL,
