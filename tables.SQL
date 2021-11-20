@@ -8,7 +8,9 @@ CREATE TABLE Account(id INTEGER,
 
 CREATE TABLE Moderator (id INTEGER,
       PRIMARY KEY(id),
-       FOREIGN KEY(id) REFERENCES Account
+      welcome_message VARCHAR(100) DEFAULT "Welcome, dear moderator!",
+      promotion_date TIMESTAMP DEFAULT NOW,
+      FOREIGN KEY(id) REFERENCES Account
 );
 
 CREATE TABLE Bid (id INTEGER,
