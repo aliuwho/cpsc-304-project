@@ -58,7 +58,8 @@ create table Flag (
         aid INTEGER NOT NULL,
         mid INTEGER NOT NULL,
         FOREIGN KEY(aid) REFERENCES Account,
-        FOREIGN KEY(mid) REFERENCES Moderator PRIMARY KEY(f_id)
+        FOREIGN KEY(mid) REFERENCES Moderator,
+        PRIMARY KEY(f_id)
 );
 create table Broadcast (
         b_id Integer,
