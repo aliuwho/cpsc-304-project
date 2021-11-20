@@ -218,6 +218,14 @@ INSERT INTO Category
 VALUES('Sports equipment');
 INSERT INTO Category
 VALUES('Coupons');
+INSERT INTO Category
+VALUES('Info');
+INSERT INTO Category
+VALUES('Services');
+INSERT INTO Category
+VALUES('Transportation');
+INSERT INTO Category
+VALUES('Other');
 INSERT INTO Post(
         post_id,
         post_type,
@@ -422,3 +430,78 @@ INSERT INTO Bid(id, lid, aid)
 VALUES (5, 5, 5);
 INSERT INTO Bid(id, lid, aid)
 VALUES (6, 5, 1);
+INSERT INTO BelongsTo
+VALUES(1, 'Electronics');
+INSERT INTO BelongsTo
+VALUES(2, 'Clothing');
+INSERT INTO BelongsTo
+VALUES(3, 'Electronics');
+INSERT INTO BelongsTo
+VALUES(4, 'Furniture');
+INSERT INTO BelongsTo
+VALUES(5, 'Books');
+INSERT INTO BelongsTo
+VALUES(6, 'Transportation');
+INSERT INTO BelongsTo
+VALUES(7, 'Books');
+INSERT INTO BelongsTo
+VALUES(8, 'Coupons');
+INSERT INTO BelongsTo
+VALUES(9, 'Food');
+INSERT INTO BelongsTo
+VALUES(10, 'Transportation');
+INSERT INTO BelongsTo
+VALUES(11, 'Other');
+INSERT INTO LocationAddress
+VALUES('University Boulevard', 6133, 'V6T1Z1');
+INSERT INTO LocationAddress
+VALUES('University Boulevard', 6200, 'V6T1Z3');
+INSERT INTO LocationAddress
+VALUES('Main Mall', 2366, 'V6T1Z4');
+INSERT INTO LocationAddress
+VALUES('Crescent Road', 6301, 'V6T1Z2');
+INSERT INTO LocationAddress
+VALUES('Walter Gage Road', 6011, 'V6T0B4');
+INSERT INTO LocationAddress
+VALUES('University Boulevard', 6131, 'V6T2A1');
+INSERT INTO Pickup
+VALUES(
+        1,
+        'in front of Honour Roll',
+        'University Boulevard',
+        6133
+    );
+INSERT INTO Pickup
+VALUES(
+        2,
+        'in fourth floor lounge',
+        'University Boulevard',
+        6133
+    );
+INSERT INTO Pickup
+VALUES(3, 'Starbucks', 'University Boulevard', 6200);
+INSERT INTO Pickup
+VALUES(4, 'ICICS, west doors', 'Main Mall', 2366);
+INSERT INTO Pickup
+VALUES(5, 'UBC Rose Garden', 'Crescent Road', 6301);
+INSERT INTO Pickup
+VALUES(6, 'Great Dane Coffee', 'Walter Gage Road', 6011);
+INSERT INTO Pickup
+VALUES(
+        7,
+        'MacInnes Field',
+        'University Boulevard',
+        6131
+    );
+INSERT INTO Suggests
+VALUES(1, 1, TIMESTAMP '2021-10-30 12:00:00');
+INSERT INTO Suggests
+VALUES(2, 4, TIMESTAMP '2021-11-05 15:00:00');
+INSERT INTO Suggests
+VALUES(4, 3, TIMESTAMP '2021-10-30 15:30:00');
+INSERT INTO Suggests
+VALUES(5, 2, TIMESTAMP '2021-10-30 15:45:00');
+INSERT INTO Suggests
+VALUES(8, 1, TIMESTAMP '2021-10-30 15:00:00');
+INSERT INTO Suggests
+VALUES(9, 5, TIMESTAMP '2021-10-30 15:00:00');
