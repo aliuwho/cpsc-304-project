@@ -57,7 +57,6 @@
         <h2>Insert new Review</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
-            Item: <input type="text" name="insItemL"> <br /><br />
             Description: <input type="text" name="insItem"> <br /><br />
             <label>DropDownList Status</label>
             <select name ="status">
