@@ -16,7 +16,7 @@ DROP TABLE Moderator;
 DROP TABLE Account;
 CREATE TABLE Account (
         id INTEGER,
-        name VARCHAR(30) NOT NULL,
+        name VARCHAR(30) NOT NULL UNIQUE,
         password VARCHAR(30) NOT NULL,
         email VARCHAR(30) NOT NULL,
         status INTEGER DEFAULT 1,
