@@ -71,6 +71,41 @@
 
         <hr />
 
+        <h2>Create a new user account</h2>
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
+            Name: <input type="text" name="insertAccountName"> <br /><br />
+            Password: <input type="text" name="insertAccountPassword"> <br /><br />
+            Email: <input type="text" name="insertAccountEmail"> <br /><br />
+            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+        </form>
+
+        <hr />
+
+        <h2>Delete a user</h2>
+
+        <hr />
+
+        <h2>Suspend a user</h2>
+
+        <hr />
+
+        <h2>View other users</h2>
+
+        <hr />
+
+        <h2>Create a broadcast</h2>
+
+        <hr />
+
+        <h2>Write a ticket</h2>
+
+        <hr />
+
+        <h2>Resolve a ticket</h2>
+
+        <hr />
+
         <h2>Update Name in DemoTable</h2>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
@@ -215,12 +250,12 @@
         function handleResetRequest() {
             global $db_conn;
             // Delete tables and create new tables
-            echo "<br> creating new table <br>";
-            executePlainSQL("start tables.SQL");
+            echo "<br> Creating new tables <br>";
+            executePlainSQL("start tables.sql");
 
             // Add tuples
-            echo "<br> filling tables <br>";
-            executePlainSQL("start tuples.SQL");
+            echo "<br> Filling tables <br>";
+            executePlainSQL("start tuples.sql");
             OCICommit($db_conn);
         }
 
@@ -241,6 +276,7 @@
             executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
             OCICommit($db_conn);
         }
+
         function handleInsertListingRequest() {
             global $db_conn;
 
@@ -252,6 +288,33 @@
             $alltuples = array (
                 $tuple
             );
+        }
+
+        function handleInsertAccountRequest() {
+            global $db_conn;
+            
+            // generate new id for new account
+            // sourced from https://stackoverflow.com/questions/13932259/unique-id-consisting-of-only-numbers
+            // for demonstration purposes, this will suffice for generating unique entries
+            $newId = microtime() + floor(rand()*10000);
+
+            // Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind0" => 34,
+                ":bind1" => $_POST['insertAccountName'],
+                ":bind2" => $_POST['insertAccountPassword'],
+                ":bind3" => $_POST['insertAccountEmail']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+
+            executeBoundSQL("insert into account(id, name, password, email) values (:bind0, :bind1, :bind2, :bind3)", $alltuples);
+            OCICommit($db_conn);
+        }
+
         function handleReviewRequest() {
             global $db_conn;
 
@@ -279,7 +342,8 @@
         }
 
         // HANDLE ALL POST ROUTES
-	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
+	    // A better coding practice is to have one method that reroutes your requests accordingly. 
+        // It will make it easier to add/remove functionality.
         function handlePOSTRequest() {
             if (connectToDB()) {
                 if (array_key_exists('resetTablesRequest', $_POST)) {
@@ -290,9 +354,10 @@
                     handleInsertRequest();
                 } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
                     handleInsertListingRequest();
-                }
                 } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
                     handleReviewRequest();
+                } else if (array_key_exists('insertAccountRequest', $_POST)) {
+                    handleInsertAccountRequest();
                 }
 
                 disconnectFromDB();
@@ -311,7 +376,7 @@
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit'])) {
+		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) || isset($_POST['insertAccountSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest'])) {
             handleGETRequest();
