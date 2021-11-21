@@ -252,11 +252,11 @@
             global $db_conn;
             // Delete tables and create new tables
             echo "<br> Creating new tables <br>";
-            executePlainSQL("start tables.SQL");
+            executePlainSQL("start tables.sql");
 
             // Add tuples
             echo "<br> Filling tables <br>";
-            executePlainSQL("start tuples.SQL");
+            executePlainSQL("start tuples.sql");
             OCICommit($db_conn);
         }
 
