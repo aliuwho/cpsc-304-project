@@ -16,7 +16,7 @@ DROP TABLE Moderator;
 DROP TABLE Account;
 CREATE TABLE Account (
         id INTEGER,
-        name VARCHAR(30) NOT NULL,
+        name VARCHAR(30) NOT NULL UNIQUE,
         password VARCHAR(30) NOT NULL,
         email VARCHAR(30) NOT NULL,
         status INTEGER DEFAULT 1,
@@ -33,7 +33,7 @@ CREATE TABLE Moderator (
 CREATE TABLE Ticket (
         tid INTEGER,
         aid INTEGER NOT NULL,
-        mid INTEGER DEFAULT 0,
+        mid INTEGER,
         t_subject VARCHAR(50),
         t_category VARCHAR(30),
         t_priority INTEGER DEFAULT 0,

@@ -102,10 +102,10 @@ VALUES (
         'good item quality',
         3
     );
-INSERT INTO Ticket(tid, aid, mid, t_subject, t_category, t_priority)
-VALUES (6, 0, 6, 'ate a bagel', 'false information', 0);
-INSERT INTO Ticket(tid, aid, mid, t_subject, t_category, t_priority)
-VALUES (7, 4, 6, 'horrible ui', 'bad item quality', 1);
+INSERT INTO Ticket(tid, aid, t_subject, t_category, t_priority)
+VALUES (6, 0, 'ate a bagel', 'false information', 0);
+INSERT INTO Ticket(tid, aid, t_subject, t_category, t_priority)
+VALUES (7, 4, 'horrible ui', 'bad item quality', 1);
 INSERT INTO Flag(f_id, f_description, aid, mid)
 VALUES (3, 'bad behavior', 0, 1);
 INSERT INTO Flag(f_id, f_description, aid, mid)
