@@ -19,14 +19,14 @@
 
 <html>
     <head>
-        <title>UBC GIVE</title>
+        <title>UBC GIVE--bug</title>
     </head>
 
     <body>
         <h2>Reset</h2>
         <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
-        <form method="POST" action="ubc-give.php">
+        <form method="POST" action="ubc-give-krishbug.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
             <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
             <p><input type="submit" value="Reset" name="reset"></p>
@@ -35,7 +35,7 @@
         <hr />
 
         <h2>Insert Values into DemoTable</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
             Number: <input type="text" name="insNo"> <br /><br />
             Name: <input type="text" name="insName"> <br /><br />
@@ -47,16 +47,16 @@
        
 
         <h2>Insert new Listing</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertListingQueryRequest" name="insertListingQueryRequest">
             Item: <input type="text" name="insItemL"> <br /><br />
-
+            
             <input type="submit" value="InsertListing" name="insertListingSubmit"></p>
         </form>
 
         <hr />
-        <h2>Insert new Review</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+        <h2>Insert new Request</h2>
+        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
             Description: <input type="text" name="insDescription"> <br /><br />
             <label>DropDownList Status</label>
@@ -67,13 +67,13 @@
                 <option value="PUT"> PUT </option>
                 <option value="PATCH"> PATCH </option>
                 <option value="DELETE"> DELETE </option>
-            <input type="submit" value="InsertReview" name="insertReviewSubmit"></p>
+            <input type="submit" value="InsertRequest" name="insertRequestSubmit"></p>
         </form>
 
         <hr />
 
         <h2>Create a new user account</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
             Name: <input type="text" name="insertAccountName"> <br /><br />
             Password: <input type="text" name="insertAccountPassword"> <br /><br />
@@ -110,7 +110,7 @@
         <h2>Update Name in DemoTable</h2>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
             Old Name: <input type="text" name="oldName"> <br /><br />
             New Name: <input type="text" name="newName"> <br /><br />
@@ -121,14 +121,14 @@
         <hr />
 
         <h2>Count the Tuples in DemoTable</h2>
-        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
+        <form method="GET" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
             <input type="submit" name="countTuples"></p>
         </form>
         <hr />
 
-        <h2>Display the Tuples in DemoTable</h2>
-        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
+        <h2>Display the Tuples in Listing</h2>
+        <form method="GET" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
         </form>
@@ -367,7 +367,7 @@ function handleInsertListingRequest() {
             OCICommit($db_conn);
         }
 
-        function handleReviewRequest() {
+        function handleInsertRequestRequest() {
             global $db_conn;
             //$postID= microtime() + floor(rand()*10000);
             $id = hexdec( uniqid() );
@@ -377,7 +377,7 @@ function handleInsertListingRequest() {
             $timestamp = date('Y-m-d H:i:s');
             $exp = date("j, n, Y+1");
                 $postID = $id;
-                $postType="Listing";
+                $postType="Review";
                 $postStatus = "Open";
                 $account = 0;
                 $createdon = $today1;
@@ -407,7 +407,7 @@ function handleInsertListingRequest() {
 		printResult($result);
             
             if (($row = oci_fetch_row($result)) != false) {
-                echo "<br> The number of tuples in demoTablezz: " . $row[0] . "<br>";
+                echo "<br> The number of tuples in Listing: " . $row[0] . "<br>";
             }
         } 
 
