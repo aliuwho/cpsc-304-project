@@ -58,7 +58,7 @@
         <h2>Insert new Review</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
-            Description: <input type="text" name="insItem"> <br /><br />
+            Description: <input type="text" name="insDescription"> <br /><br />
             <label>DropDownList Status</label>
             <select name ="status">
                 <option value=""> --Select--</option>
@@ -306,7 +306,7 @@
             ); */
 function handleInsertListingRequest() {
             global $db_conn;
-            $postID= microtime() + floor(rand()*10000);
+            //$postID= microtime() + floor(rand()*10000);
             $id = hexdec( uniqid() );
             $today = date("j, n, Y");
             $today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
@@ -339,7 +339,7 @@ function handleInsertListingRequest() {
          //   executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,:bind3,:bind4,:bind5,:bind6)", $$allPosttuples);
             //executeBoundSQL("insert into Listing(post_id,item) values (:bind0,:bind1)", $alltuples);
            
-            );
+            
         }
 
         function handleInsertAccountRequest() {
@@ -369,17 +369,25 @@ function handleInsertListingRequest() {
 
         function handleReviewRequest() {
             global $db_conn;
-
-            //Getting the values from user and insert data into the table
-            $tuple = array (
-                ":bindx" => $_POST['insItem']
-            );
-
-            $alltuples = array (
-                $tuple
-            );
-            
-            executeBoundSQL("insert into demoTable values (:bindx,abc)", $alltuples);
+            //$postID= microtime() + floor(rand()*10000);
+            $id = hexdec( uniqid() );
+            $today = date("j, n, Y");
+            $today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
+             
+            $timestamp = date('Y-m-d H:i:s');
+            $exp = date("j, n, Y+1");
+                $postID = $id;
+                $postType="Listing";
+                $postStatus = "Open";
+                $account = 0;
+                $createdon = $today1;
+                $updatedOn =$today1;
+                $expire = $today1;
+                $pid = 9;
+                $requestDescription = $_POST['insDescription'];
+             executePlainSQL("insert into Post values ('$postID','$postType','$account',
+             '$createdon','$updatedon','$expire','$postStatus')");
+            executePlainSQL("insert into Review values ('$postID','$requestDescription',)");
             OCICommit($db_conn);
         }
 
@@ -417,7 +425,7 @@ function handleInsertListingRequest() {
                     handleInsertRequest();
                 } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
                     handleInsertListingRequest();
-                } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
+                } else if (array_key_exists('insertReviewQueryRequest', $_POST)) {
                     handleReviewRequest();
                 } else if (array_key_exists('insertAccountRequest', $_POST)) {
                     handleInsertAccountRequest();
@@ -447,7 +455,7 @@ function handleInsertListingRequest() {
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
             handleGETRequest();
         }
+    }
 		?>
 	</body>
 </html>
-
