@@ -433,6 +433,7 @@ function handleInsertListingRequest() {
 
                 disconnectFromDB();
             }
+        }
         
 
         // HANDLE ALL GET ROUTES
@@ -450,12 +451,14 @@ function handleInsertListingRequest() {
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) || isset($_POST['insertAccountSubmit'])) {
+		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || 
+        isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) ||
+        isset($_POST['insertAccountSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
             handleGETRequest();
         }
-    }
+    
 		?>
 	</body>
 </html>
