@@ -1,3 +1,4 @@
+
 <!--Test Oracle file for UBC CPSC304 2018 Winter Term 1
   Created by Jiemin Zhang
   Modified by Simona Radu
@@ -90,6 +91,14 @@
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
             <input type="submit" name="countTuples"></p>
         </form>
+        <hr />
+
+        <h2>Display the Tuples in DemoTable</h2>
+        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
+            <input type="submit" name="displayTuples"></p>
+        </form>
+        <hr />
 
         <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -242,17 +251,62 @@
             executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
             OCICommit($db_conn);
         }
-        function handleInsertListingRequest() {
-            global $db_conn;
-
+       
             //Getting the values from user and insert data into the table
-            $tuple = array (
-                ":bindx" => $_POST['insItem']
+            
+           //post tuple 
+           /*  $tuplePost = array (
+                ":bind0" => $postID,
+                ":bind1" => "Listing",
+                ":bind2" => 0,
+                ":bind3" => TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                ":bind4" => $_POST['insItemL']
             );
-
-            $alltuples = array (
+            $allPosttuples = array (
+                $tuplePost
+            ); */
+            //Listing tuples 
+            /* $tuple = array (
+                ":bind0" => 9,
+                ":bind1" => $_POST['insItemL']
+            ); */
+function handleInsertListingRequest() {
+            global $db_conn;
+            $postID= microtime() + floor(rand()*10000);
+            $id = hexdec( uniqid() );
+            $today = date("j, n, Y");
+            $today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
+             
+            $timestamp = date('Y-m-d H:i:s');
+            $exp = date("j, n, Y+1");
+                $postID = $id;
+                $postType="Listing";
+                $postStatus = "Open";
+                $account = 0;
+                $createdon = $today1;
+                $updatedOn =$today1;
+                $expire = $today1;
+                $pid = 9;
+                $listing = $_POST['insItemL'];
+             executePlainSQL("insert into Post values ('$postID','$postType','$account',
+             '$createdon','$updatedon','$expire','$postStatus')");
+            executePlainSQL("insert into Listing values ('$postID','$listing')");
+            OCICommit($db_conn);
+            /* $alltuples = array (
                 $tuple
-            );
+            ); */
+            /* post_id INTEGER,
+            post_type VARCHAR(10) NOT NULL,
+            account_id INTEGER NOT NULL,
+            created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            expiration TIMESTAMP NOT NULL,
+            post_status */
+         //   executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,:bind3,:bind4,:bind5,:bind6)", $$allPosttuples);
+            //executeBoundSQL("insert into Listing(post_id,item) values (:bind0,:bind1)", $alltuples);
+           
+        }
+
         function handleReviewRequest() {
             global $db_conn;
 
@@ -272,12 +326,23 @@
         function handleCountRequest() {
             global $db_conn;
 
-            $result = executePlainSQL("SELECT Count(*) FROM demoTable");
+            $result = executePlainSQL("SELECT Count(*) FROM Listing");
 
             if (($row = oci_fetch_row($result)) != false) {
-                echo "<br> The number of tuples in demoTable: " . $row[0] . "<br>";
+                echo "<br> The number of tuples in Listing: " . $row[0] . "<br>";
             }
         }
+        function handleDisplayRequest() {
+            global $db_conn;
+
+             $result = executePlainSQL("SELECT * FROM Listing");
+		printResult($result);
+            
+            if (($row = oci_fetch_row($result)) != false) {
+                echo "<br> The number of tuples in demoTablezz: " . $row[0] . "<br>";
+            }
+        } 
+
 
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -298,7 +363,7 @@
 
                 disconnectFromDB();
             }
-        }
+        
 
         // HANDLE ALL GET ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -306,7 +371,10 @@
             if (connectToDB()) {
                 if (array_key_exists('countTuples', $_GET)) {
                     handleCountRequest();
+                }else if (array_key_exists('displayTuples', $_GET)) {
+                    handleDisplayRequest();
                 }
+
 
                 disconnectFromDB();
             }
@@ -314,7 +382,7 @@
 
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['countTupleRequest'])) {
+        } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
             handleGETRequest();
         }
 		?>
