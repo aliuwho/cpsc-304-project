@@ -289,25 +289,11 @@
             //Getting the values from user and insert data into the table
             
            //post tuple 
-           /*  $tuplePost = array (
-                ":bind0" => $postID,
-                ":bind1" => "Listing",
-                ":bind2" => 0,
-                ":bind3" => TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                ":bind4" => $_POST['insItemL']
-            );
-            $allPosttuples = array (
-                $tuplePost
-            ); */
-            //Listing tuples 
-            /* $tuple = array (
-                ":bind0" => 9,
-                ":bind1" => $_POST['insItemL']
-            ); */
+           
 function handleInsertListingRequest() {
             global $db_conn;
             //$postID= microtime() + floor(rand()*10000);
-            $id = hexdec( uniqid() );
+           /*  $id = hexdec( uniqid() );
             $today = date("j, n, Y");
             $today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
              
@@ -321,14 +307,19 @@ function handleInsertListingRequest() {
                 $updatedOn =$today1;
                 $expire = $today1;
                 $pid = 9;
-                $listing = $_POST['insItemL'];
-             executePlainSQL("insert into Post values ('$postID','$postType','$account',
+                $listing = $_POST['insItemL']; */
+             /* executePlainSQL("insert into Post values ('$postID','$postType','$account',
              '$createdon','$updatedon','$expire','$postStatus')");
-            executePlainSQL("insert into Listing values ('$postID','$listing')");
+            executePlainSQL("insert into Listing values ('$postID','$listing')"); */
+
             OCICommit($db_conn);
-            /* $alltuples = array (
-                $tuple
-            ); */
+            
+            $today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
+
+            $createdon = $today1;
+            $updatedOn =$today1;
+            $expire = $today1;
+            $postStatus = "Open";
             /* post_id INTEGER,
             post_type VARCHAR(10) NOT NULL,
             account_id INTEGER NOT NULL,
@@ -336,10 +327,31 @@ function handleInsertListingRequest() {
             updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             expiration TIMESTAMP NOT NULL,
             post_status */
-         //   executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,:bind3,:bind4,:bind5,:bind6)", $$allPosttuples);
-            //executeBoundSQL("insert into Listing(post_id,item) values (:bind0,:bind1)", $alltuples);
+            $tuplePost = array (
+                ":bind0" => $postID,
+                ":bind1" => "Listing",
+                ":bind2" => 0,
+                ":bind3" => $createdon,
+                ":bind4" => $createdon,
+                ":bind5" => $createdon,
+                ":bind6" => $postStatus
+            );
+            $allPosttuples = array (
+                $tuplePost
+            ); 
+            //Listing tuples 
+             $tuple = array (
+                ":bind0" => $postID,
+                ":bind1" => $_POST['insItemL']
+            );
+            $alltuples = array (
+                $tuple
+            ); 
+           executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,:bind3,:bind4,:bind5,:bind6)", $$allPosttuples);
+           OCICommit($db_conn);
+           executeBoundSQL("insert into Listing(post_id,item) values (:bind0,:bind1)", $alltuples);
            
-            
+            OCICommit($db_conn);
         }
 
         function handleInsertAccountRequest() {
@@ -403,7 +415,7 @@ function handleInsertListingRequest() {
         function handleDisplayRequest() {
             global $db_conn;
 
-             $result = executePlainSQL("SELECT * FROM Listing");
+             $result = executePlainSQL("SELECT * FROM Post");
 		printResult($result);
             
             if (($row = oci_fetch_row($result)) != false) {
