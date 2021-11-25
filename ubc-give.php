@@ -85,11 +85,9 @@
 
         <h2>Delete a user</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
-            Name: <input type="text" name="insertAccountName"> <br /><br />
-            Password: <input type="text" name="insertAccountPassword"> <br /><br />
-            Email: <input type="text" name="insertAccountEmail"> <br /><br />
-            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+            <input type="hidden" id="deleteAccountRequest" name="deleteAccountRequest">
+            Account ID: <input type="text" name="deleteAccountID"> <br /><br />
+            <input type="submit" value="Delete Account" name="deleteAccountSubmit"></p>
         </form>
 
         <hr />
@@ -420,6 +418,23 @@ function handleInsertListingRequest() {
             OCICommit($db_conn);
         }
 
+        function handleDeleteAccountRequest() {
+            global $db_conn;
+            
+            // Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind1" => $_POST['deleteAccountID']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+
+            executeBoundSQL("delete from account where id=:bind1", $alltuples);
+            OCICommit($db_conn);
+        }
+
         function handleInsertAccountRequest() {
             global $db_conn;
             
@@ -430,7 +445,7 @@ function handleInsertListingRequest() {
 
             // Getting the values from user and insert data into the table
             $tuple = array (
-                ":bind0" => 34,
+                ":bind0" => $newId,
                 ":bind1" => $_POST['insertAccountName'],
                 ":bind2" => $_POST['insertAccountPassword'],
                 ":bind3" => $_POST['insertAccountEmail']
@@ -507,6 +522,8 @@ function handleInsertListingRequest() {
                     handleReviewRequest();
                 } else if (array_key_exists('insertAccountRequest', $_POST)) {
                     handleInsertAccountRequest();
+                } else if (array_key_exists('deleteAccountRequest', $_POST)) {
+                    handleDeleteAccountRequest();
                 }
 
                 disconnectFromDB();
@@ -531,7 +548,7 @@ function handleInsertListingRequest() {
 
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || 
         isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) ||
-        isset($_POST['insertAccountSubmit'])) {
+        isset($_POST['insertAccountSubmit']) || isset($_POST['deleteAccountSubmit'])) {
             echo "1";
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
