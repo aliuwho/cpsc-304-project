@@ -1,14 +1,11 @@
 
-<!--Test Oracle file for UBC CPSC304 2018 Winter Term 1
+<!--Built using the test Oracle file for UBC CPSC304 2018 Winter Term 1
   Created by Jiemin Zhang
   Modified by Simona Radu
   Modified by Jessica Wong (2018-06-22)
-  This file shows the very basics of how to execute PHP commands
-  on Oracle.  
-  Specifically, it will drop a table, create a table, insert values
-  update values, and then query for values
- 
-  IF YOU HAVE A TABLE CALLED "demoTable" IT WILL BE DESTROYED
+  Modified by Louise Cooke, Amy Liu, and Krish Thukral
+  
+  IF YOU HAVE TABLES MATCHING THOSE IN tables.sql THEY WILL BE DESTROYED
 
   The script assumes you already have a server set up
   All OCI commands are commands to the Oracle libraries
@@ -19,7 +16,7 @@
 
 <html>
     <head>
-        <title>UBC GIVE--bug</title>
+        <title>UBC GIVE</title>
     </head>
 
     <body>
@@ -95,20 +92,18 @@
         <h2>Suspend a user</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="suspendAccountRequest" name="suspendAccountRequest">
-            Account ID to Suspend: <input type="text" name="suspendAccountAID"> <br /><br />
-            Moderator ID: <input type="text" name="suspendAccountMID"> <br /><br />
-            <input type="submit" value="Suspend Account" name="suspendAccountSubmit"></p>
+            User ID (Suspendee): <input type="text" name="suspendAccountAID"> <br /><br />
+            Moderator ID (Suspender): <input type="text" name="suspendAccountMID"> <br /><br />
+            <input type="submit" value="Suspend User" name="suspendAccountSubmit"></p>
         </form>
 
         <hr />
 
         <h2>View other users</h2>
         <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
-            Name: <input type="text" name="insertAccountName"> <br /><br />
-            Password: <input type="text" name="insertAccountPassword"> <br /><br />
-            Email: <input type="text" name="insertAccountEmail"> <br /><br />
-            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+            <input type="hidden" id="viewUsersRequest" name="viewUsersRequest">
+            Your Account ID: <input type="text" name="viewUserID"> <br /><br />
+            <input type="submit" value="View Other Users" name="viewUsersSubmit"></p>
         </form>
 
         <hr />
@@ -321,6 +316,7 @@
             // Add tuples
             echo "<br> Filling tables <br>";
             // executePlainSQL("start tuples.sql");
+            // TODO ADD STATEMENTS FOR INSERTING TUPLES
             executePlainSQL("@tuples.sql");
             OCICommit($db_conn);
         }
@@ -415,6 +411,35 @@ function handleInsertListingRequest() {
            executeBoundSQL("insert into Listing(post_id,item) values (:bind0,:bind1)", $alltuples);
            echo "<br>IM HERE<br>";
             OCICommit($db_conn);
+        }
+
+        function printUsers($result) { //prints users
+            echo "<br>Other users:<br>";
+            echo "<table>";
+            echo "<tr><th>Name</th><th>Email</th></tr>";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                // echo "<tr><td>" . $row["name"] . "</td><td>" . $row["email"] . "</td></tr>"; //or just use "echo $row[0]" 
+                echo "<tr><td>" . $row["NAME"] . "</td><td>" . $row["EMAIL"];
+            }
+
+            echo "</table>";
+        }
+
+        function handleViewUsersRequest() {
+            // Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind1" => $_GET['viewUserID']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+            $result = executePlainSQL("select * from account where id <> " . $_GET['viewUserID']);
+            // $result = executeBoundSQL("select * from account where id <> :bind1", $alltuples);
+            echo "<br>" . printUsers($result) . "<br>";
+
         }
 
         function handleSuspendAccountRequest() {
@@ -556,8 +581,10 @@ function handleInsertListingRequest() {
             if (connectToDB()) {
                 if (array_key_exists('countTuples', $_GET)) {
                     handleCountRequest();
-                }else if (array_key_exists('displayTuples', $_GET)) {
+                } else if (array_key_exists('displayTuples', $_GET)) {
                     handleDisplayRequest();
+                } else if (array_key_exists('viewUsersRequest', $_GET)) {
+                    handleViewUsersRequest();
                 }
 
 
@@ -571,7 +598,8 @@ function handleInsertListingRequest() {
         isset($_POST['suspendAccountSubmit'])) {
             echo "Finished execution.";
             handlePOSTRequest();
-        } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
+        } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
+        isset($_GET['viewUsersRequest'])) {
             handleGETRequest();
         }
     
