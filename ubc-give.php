@@ -110,11 +110,10 @@
 
         <h2>Create a broadcast</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
-            Name: <input type="text" name="insertAccountName"> <br /><br />
-            Password: <input type="text" name="insertAccountPassword"> <br /><br />
-            Email: <input type="text" name="insertAccountEmail"> <br /><br />
-            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+            <input type="hidden" id="insertBroadcastRequest" name="insertBroadcastRequest">
+            Broadcast ID: <input type="text" name="insertBroadcastID"> <br /><br />
+            Broadcast Message: <input type="text" name="insertBroadcastMessage"> <br /><br />
+            <input type="submit" value="Create New Broadcast" name="insertBroadcastSubmit"></p>
         </form>
 
         <hr />
@@ -413,6 +412,23 @@ function handleInsertListingRequest() {
             OCICommit($db_conn);
         }
 
+        function handleInsertBroadcastRequest() {
+            global $db_conn;
+
+            // Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind1" => $_POST['insertBroadcastID'],
+                ":bind2" => $_POST['insertBroadcastMessage']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+            $result = executeBoundSQL("insert into broadcast(b_id, b_message) values (:bind1, :bind2)", $alltuples);
+            OCICommit($db_conn);
+        }
+
         function printUsers($result) { //prints users
             echo "<br>Other users:<br>";
             echo "<table>";
@@ -568,6 +584,8 @@ function handleInsertListingRequest() {
                     handleDeleteAccountRequest();
                 } else if (array_key_exists('deleteAccountRequest', $_POST)) {
                     handleSuspendAccountRequest();
+                } else if (array_key_exists('insertBroadcastRequest', $_POST)) {
+                    handleInsertBroadcastRequest();
                 }
 
                 disconnectFromDB();
@@ -595,7 +613,7 @@ function handleInsertListingRequest() {
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || 
         isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) ||
         isset($_POST['insertAccountSubmit']) || isset($_POST['deleteAccountSubmit']) ||
-        isset($_POST['suspendAccountSubmit'])) {
+        isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit'])) {
             echo "Finished execution.";
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
