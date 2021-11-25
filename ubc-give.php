@@ -94,11 +94,10 @@
 
         <h2>Suspend a user</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
-            Name: <input type="text" name="insertAccountName"> <br /><br />
-            Password: <input type="text" name="insertAccountPassword"> <br /><br />
-            Email: <input type="text" name="insertAccountEmail"> <br /><br />
-            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+            <input type="hidden" id="suspendAccountRequest" name="suspendAccountRequest">
+            Account ID to Suspend: <input type="text" name="suspendAccountAID"> <br /><br />
+            Moderator ID: <input type="text" name="suspendAccountMID"> <br /><br />
+            <input type="submit" value="Suspend Account" name="suspendAccountSubmit"></p>
         </form>
 
         <hr />
@@ -418,6 +417,24 @@ function handleInsertListingRequest() {
             OCICommit($db_conn);
         }
 
+        function handleSuspendAccountRequest() {
+            global $db_conn;
+            
+            // Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind1" => $_POST['deleteAccountAID'],
+                ":bind2" => $_POST['deleteAccountMID']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+
+            executeBoundSQL("insert into suspends(aid, mid) value(:bind1, :bind2)", $alltuples);
+            OCICommit($db_conn);
+        }
+
         function handleDeleteAccountRequest() {
             global $db_conn;
             
@@ -524,6 +541,8 @@ function handleInsertListingRequest() {
                     handleInsertAccountRequest();
                 } else if (array_key_exists('deleteAccountRequest', $_POST)) {
                     handleDeleteAccountRequest();
+                } else if (array_key_exists('deleteAccountRequest', $_POST)) {
+                    handleSuspendAccountRequest();
                 }
 
                 disconnectFromDB();
@@ -548,8 +567,9 @@ function handleInsertListingRequest() {
 
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || 
         isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) ||
-        isset($_POST['insertAccountSubmit']) || isset($_POST['deleteAccountSubmit'])) {
-            echo "1";
+        isset($_POST['insertAccountSubmit']) || isset($_POST['deleteAccountSubmit']) ||
+        isset($_POST['suspendAccountSubmit'])) {
+            echo "Finished execution.";
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
             handleGETRequest();
