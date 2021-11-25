@@ -102,7 +102,7 @@
         <h2>View other users</h2>
         <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="viewUsersRequest" name="viewUsersRequest">
-            Your Account ID: <input type="text" name="viewUserID"> <br /><br />
+            Your account ID: <input type="text" name="viewUserID"> <br /><br />
             <input type="submit" value="View Other Users" name="viewUsersSubmit"></p>
         </form>
 
@@ -111,7 +111,7 @@
         <h2>Create a broadcast</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertBroadcastRequest" name="insertBroadcastRequest">
-            Broadcast Message: <input type="text" name="insertBroadcastMessage"> <br /><br />
+            Broadcast message: <input type="text" name="insertBroadcastMessage"> <br /><br />
             <input type="submit" value="Create New Broadcast" name="insertBroadcastSubmit"></p>
         </form>
 
@@ -119,11 +119,12 @@
 
         <h2>Write a ticket</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
-            Name: <input type="text" name="insertAccountName"> <br /><br />
-            Password: <input type="text" name="insertAccountPassword"> <br /><br />
-            Email: <input type="text" name="insertAccountEmail"> <br /><br />
-            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+            <input type="hidden" id="insertTicketRequest" name="insertTicketRequest">
+            Your account ID: <input type="text" name="insertTicketAID"> <br /><br />
+            Brief description: <input type="text" name="insertTicketSubject"> <br /><br />
+            Category: <input type="text" name="insertTicketCategory"> <br /><br />
+            Priority (an integer where higher numbers idicate higher priority):<br /><input type="text" name="insertTicketPriority"> <br /><br />
+            <input type="submit" value="Create a New Ticket" name="insertTicketSubmit"></p>
         </form>
 
         <hr />
@@ -292,7 +293,6 @@
             global $db_conn;
             // Delete tables
             echo "<br> Creating new tables <br>";
-            // executePlainSQL("executePlainSQL("DROP TABLE demoTable");
             executePlainSQL("DROP TABLE Suggests");
             executePlainSQL("DROP TABLE Pickup");
             executePlainSQL("DROP TABLE LocationAddress");
@@ -411,17 +411,40 @@ function handleInsertListingRequest() {
             OCICommit($db_conn);
         }
 
-        function handleInsertBroadcastRequest() {
-            global $db_conn;
-
-            // generate new id for new account
+        function generateNewID() {
+            // generate new id
             // sourced from https://stackoverflow.com/questions/13932259/unique-id-consisting-of-only-numbers
             // for demonstration purposes, this will suffice for generating unique entries
             $newId = microtime() + floor(rand()*10000);
+            return $newId;
+        }
+
+        function handleInsertTicketRequest() {
+            global $db_conn;
 
             // Getting the values from user and insert data into the table
             $tuple = array (
-                ":bind0" => $newId,
+                ":bind0" => generateNewID(),
+                ":bind1" => $_POST['insertTicketAID'],
+                ":bind2" => $_POST['insertTicketSubject'],
+                ":bind3" => $_POST['insertTicketCategory'],
+                ":bind4" => $_POST['insertTicketPriority']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+            $result = executeBoundSQL("insert into ticket(tid, aid, t_subject, t_category, t_priority) values(:bind0, :bind1, :bind2, :bind3, :bind4) ", $alltuples);
+            OCICommit($db_conn);
+        }
+
+        function handleInsertBroadcastRequest() {
+            global $db_conn;
+
+            // Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind0" => generateNewID(),
                 ":bind1" => $_POST['insertBroadcastMessage']
             );
 
@@ -457,7 +480,6 @@ function handleInsertListingRequest() {
             );
 
             $result = executePlainSQL("select * from account where id <> " . $_GET['viewUserID']);
-            // $result = executeBoundSQL("select * from account where id <> :bind1", $alltuples);
             echo "<br>" . printUsers($result) . "<br>";
 
         }
@@ -499,15 +521,10 @@ function handleInsertListingRequest() {
 
         function handleInsertAccountRequest() {
             global $db_conn;
-            
-            // generate new id for new account
-            // sourced from https://stackoverflow.com/questions/13932259/unique-id-consisting-of-only-numbers
-            // for demonstration purposes, this will suffice for generating unique entries
-            $newId = microtime() + floor(rand()*10000);
 
             // Getting the values from user and insert data into the table
             $tuple = array (
-                ":bind0" => $newId,
+                ":bind0" => generateNewID(),
                 ":bind1" => $_POST['insertAccountName'],
                 ":bind2" => $_POST['insertAccountPassword'],
                 ":bind3" => $_POST['insertAccountEmail']
@@ -516,7 +533,6 @@ function handleInsertListingRequest() {
             $alltuples = array (
                 $tuple
             );
-
 
             executeBoundSQL("insert into account(id, name, password, email) values (:bind0, :bind1, :bind2, :bind3)", $alltuples);
             OCICommit($db_conn);
@@ -590,6 +606,8 @@ function handleInsertListingRequest() {
                     handleSuspendAccountRequest();
                 } else if (array_key_exists('insertBroadcastRequest', $_POST)) {
                     handleInsertBroadcastRequest();
+                } else if (array_key_exists('insertTicketRequest', $_POST)) {
+                    handleInsertTicketRequest();
                 }
 
                 disconnectFromDB();
@@ -617,7 +635,8 @@ function handleInsertListingRequest() {
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || 
         isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) ||
         isset($_POST['insertAccountSubmit']) || isset($_POST['deleteAccountSubmit']) ||
-        isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit'])) {
+        isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit']) ||
+        isset($_POST['insertTicketSubmit'])) {
             echo "Finished execution.";
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
