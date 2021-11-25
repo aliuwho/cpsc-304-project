@@ -131,11 +131,10 @@
 
         <h2>Resolve a ticket</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
-            Name: <input type="text" name="insertAccountName"> <br /><br />
-            Password: <input type="text" name="insertAccountPassword"> <br /><br />
-            Email: <input type="text" name="insertAccountEmail"> <br /><br />
-            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+            <input type="hidden" id="resolveTicketRequest" name="resolveTicketRequest">
+            Account ID for the ticket: <input type="text" name="resolveTicketTID"> <br /><br />
+            Moderator ID: <input type="text" name="resolveTicketMID"> <br /><br />
+            <input type="submit" value="Resolve Ticket" name="resolveTicketSubmit"></p>
         </form>
 
         <hr />
@@ -411,6 +410,23 @@ function handleInsertListingRequest() {
             OCICommit($db_conn);
         }
 
+        function handleResolveTicketRequest() {
+            global $db_conn;
+
+            // Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind1" => $_POST['resolveTicketTID'],
+                ":bind2" => $_POST['resolveTicketMID']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+            executeBoundSQL("update ticket set mid=:bind2 where tid=:bind1", $alltuples);
+            OCICommit($db_conn);
+        }
+
         function generateNewID() {
             // generate new id
             // sourced from https://stackoverflow.com/questions/13932259/unique-id-consisting-of-only-numbers
@@ -608,6 +624,8 @@ function handleInsertListingRequest() {
                     handleInsertBroadcastRequest();
                 } else if (array_key_exists('insertTicketRequest', $_POST)) {
                     handleInsertTicketRequest();
+                } else if (array_key_exists('resolveTicketRequest', $_POST)) {
+                    handleResolveTicketRequest();
                 }
 
                 disconnectFromDB();
@@ -636,7 +654,7 @@ function handleInsertListingRequest() {
         isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) ||
         isset($_POST['insertAccountSubmit']) || isset($_POST['deleteAccountSubmit']) ||
         isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit']) ||
-        isset($_POST['insertTicketSubmit'])) {
+        isset($_POST['insertTicketSubmit']) || isset($_POST['resolveTicketSubmit'])) {
             echo "Finished execution.";
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
