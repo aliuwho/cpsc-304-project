@@ -111,7 +111,6 @@
         <h2>Create a broadcast</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertBroadcastRequest" name="insertBroadcastRequest">
-            Broadcast ID: <input type="text" name="insertBroadcastID"> <br /><br />
             Broadcast Message: <input type="text" name="insertBroadcastMessage"> <br /><br />
             <input type="submit" value="Create New Broadcast" name="insertBroadcastSubmit"></p>
         </form>
@@ -415,17 +414,22 @@ function handleInsertListingRequest() {
         function handleInsertBroadcastRequest() {
             global $db_conn;
 
+            // generate new id for new account
+            // sourced from https://stackoverflow.com/questions/13932259/unique-id-consisting-of-only-numbers
+            // for demonstration purposes, this will suffice for generating unique entries
+            $newId = microtime() + floor(rand()*10000);
+
             // Getting the values from user and insert data into the table
             $tuple = array (
-                ":bind1" => $_POST['insertBroadcastID'],
-                ":bind2" => $_POST['insertBroadcastMessage']
+                ":bind0" => $newId,
+                ":bind1" => $_POST['insertBroadcastMessage']
             );
 
             $alltuples = array (
                 $tuple
             );
 
-            $result = executeBoundSQL("insert into broadcast(b_id, b_message) values (:bind1, :bind2)", $alltuples);
+            $result = executeBoundSQL("insert into broadcast(b_id, b_message) values (:bind0, :bind1)", $alltuples);
             OCICommit($db_conn);
         }
 
