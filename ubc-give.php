@@ -26,7 +26,7 @@
         <h2>Reset</h2>
         <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
-        <form method="POST" action="ubc-give-krishbug.php">
+        <form method="POST" action="ubc-give.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
             <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
             <p><input type="submit" value="Reset" name="reset"></p>
@@ -35,7 +35,7 @@
         <hr />
 
         <h2>Insert Values into DemoTable</h2>
-        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
             Number: <input type="text" name="insNo"> <br /><br />
             Name: <input type="text" name="insName"> <br /><br />
@@ -47,7 +47,7 @@
        
 
         <h2>Insert new Listing</h2>
-        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertListingQueryRequest" name="insertListingQueryRequest">
             Item: <input type="text" name="insItemL"> <br /><br />
             
@@ -56,7 +56,7 @@
 
         <hr />
         <h2>Insert new Request</h2>
-        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
             Description: <input type="text" name="insDescription"> <br /><br />
             <label>DropDownList Status</label>
@@ -73,7 +73,7 @@
         <hr />
 
         <h2>Create a new user account</h2>
-        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
             Name: <input type="text" name="insertAccountName"> <br /><br />
             Password: <input type="text" name="insertAccountPassword"> <br /><br />
@@ -84,33 +84,75 @@
         <hr />
 
         <h2>Delete a user</h2>
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
+            Name: <input type="text" name="insertAccountName"> <br /><br />
+            Password: <input type="text" name="insertAccountPassword"> <br /><br />
+            Email: <input type="text" name="insertAccountEmail"> <br /><br />
+            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+        </form>
 
         <hr />
 
         <h2>Suspend a user</h2>
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
+            Name: <input type="text" name="insertAccountName"> <br /><br />
+            Password: <input type="text" name="insertAccountPassword"> <br /><br />
+            Email: <input type="text" name="insertAccountEmail"> <br /><br />
+            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+        </form>
 
         <hr />
 
         <h2>View other users</h2>
+        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
+            Name: <input type="text" name="insertAccountName"> <br /><br />
+            Password: <input type="text" name="insertAccountPassword"> <br /><br />
+            Email: <input type="text" name="insertAccountEmail"> <br /><br />
+            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+        </form>
 
         <hr />
 
         <h2>Create a broadcast</h2>
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
+            Name: <input type="text" name="insertAccountName"> <br /><br />
+            Password: <input type="text" name="insertAccountPassword"> <br /><br />
+            Email: <input type="text" name="insertAccountEmail"> <br /><br />
+            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+        </form>
 
         <hr />
 
         <h2>Write a ticket</h2>
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
+            Name: <input type="text" name="insertAccountName"> <br /><br />
+            Password: <input type="text" name="insertAccountPassword"> <br /><br />
+            Email: <input type="text" name="insertAccountEmail"> <br /><br />
+            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+        </form>
 
         <hr />
 
         <h2>Resolve a ticket</h2>
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
+            Name: <input type="text" name="insertAccountName"> <br /><br />
+            Password: <input type="text" name="insertAccountPassword"> <br /><br />
+            Email: <input type="text" name="insertAccountEmail"> <br /><br />
+            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
+        </form>
 
         <hr />
 
         <h2>Update Name in DemoTable</h2>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
-        <form method="POST" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
             Old Name: <input type="text" name="oldName"> <br /><br />
             New Name: <input type="text" name="newName"> <br /><br />
@@ -121,14 +163,14 @@
         <hr />
 
         <h2>Count the Tuples in DemoTable</h2>
-        <form method="GET" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
+        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
             <input type="submit" name="countTuples"></p>
         </form>
         <hr />
 
         <h2>Display the Tuples in Listing</h2>
-        <form method="GET" action="ubc-give-krishbug.php"> <!--refresh page when submitted-->
+        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
         </form>
@@ -258,13 +300,31 @@
 
         function handleResetRequest() {
             global $db_conn;
-            // Delete tables and create new tables
+            // Delete tables
             echo "<br> Creating new tables <br>";
-            executePlainSQL("start tables.sql");
+            // executePlainSQL("executePlainSQL("DROP TABLE demoTable");
+            executePlainSQL("DROP TABLE Suggests");
+            executePlainSQL("DROP TABLE Pickup");
+            executePlainSQL("DROP TABLE LocationAddress");
+            executePlainSQL("DROP TABLE BelongsTo");
+            executePlainSQL("DROP TABLE Bid");
+            executePlainSQL("DROP TABLE Receives");
+            executePlainSQL("DROP TABLE Review");
+            executePlainSQL("DROP TABLE Broadcast");
+            executePlainSQL("DROP TABLE Flag");
+            executePlainSQL("DROP TABLE Ticket");
+            executePlainSQL("DROP TABLE Category");
+            executePlainSQL("DROP TABLE Request");
+            executePlainSQL("DROP TABLE Listing");
+            executePlainSQL("DROP TABLE Post");
+            executePlainSQL("DROP TABLE Moderator");
+            executePlainSQL("DROP TABLE Account");
+            
 
             // Add tuples
             echo "<br> Filling tables <br>";
-            executePlainSQL("start tuples.sql");
+            // executePlainSQL("start tuples.sql");
+            executePlainSQL("@tuples.sql");
             OCICommit($db_conn);
         }
 
