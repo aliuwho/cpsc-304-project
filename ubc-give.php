@@ -13,7 +13,6 @@
   Apache server can run it, and you must rename it to have a ".php"
   extension.  You must also change the username and password on the 
   OCILogon below to be your ORACLE username and password -->
-
 <html>
     <head>
         <title>UBC GIVE</title>
@@ -31,16 +30,16 @@
 
         <hr />
 
-        <h2>Insert Values into DemoTable</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+<!--         <h2>Insert Values into DemoTable</h2>
+        <form method="POST" action="ubc-give.php">
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
             Number: <input type="text" name="insNo"> <br /><br />
             Name: <input type="text" name="insName"> <br /><br />
 
             <input type="submit" value="Insert" name="insertSubmit"></p>
-        </form>
+        </form> 
 
-        <hr />
+        <hr /> -->
        
 
         <h2>Insert new Listing</h2>
@@ -123,7 +122,7 @@
             Your account ID: <input type="text" name="insertTicketAID"> <br /><br />
             Brief description: <input type="text" name="insertTicketSubject"> <br /><br />
             Category: <input type="text" name="insertTicketCategory"> <br /><br />
-            Priority (an integer where higher numbers idicate higher priority):<br /><input type="text" name="insertTicketPriority"> <br /><br />
+            Priority (an integer where higher numbers indicate higher priority):<br /><input type="text" name="insertTicketPriority"> <br /><br />
             <input type="submit" value="Create a New Ticket" name="insertTicketSubmit"></p>
         </form>
 
@@ -139,7 +138,7 @@
 
         <hr />
 
-        <h2>Update Name in DemoTable</h2>
+        <!-- <h2>Update Name in DemoTable</h2>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -150,9 +149,9 @@
             <input type="submit" value="Update" name="updateSubmit"></p>
         </form>
 
-        <hr />
+        <hr /> -->
 
-        <h2>Count the Tuples in DemoTable</h2>
+        <h2>Count the Tuples in Listing</h2>
         <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
             <input type="submit" name="countTuples"></p>
@@ -167,6 +166,8 @@
         <hr />
 
         <?php
+        include "./louise-queries.html";
+        include 'louise-php.php';
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
 
         $success = True; //keep track of errors so it redirects the page only if there are no errors
@@ -318,6 +319,7 @@
             OCICommit($db_conn);
         }
 
+        // TEMPLATE FOR INSERTS
         function handleInsertRequest() {
             global $db_conn;
 
@@ -336,6 +338,24 @@
             OCICommit($db_conn);
         }
        
+        function handleListingInsertRequest() {
+            global $db_conn;
+
+            //Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind1" => $_POST['streetname'],
+                ":bind2" => $_POST['streetno'],
+                ":bind3" => $_POST['postalcode'],
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+            executeBoundSQL("INSERT INTO LocationAddress values (:bind1, :bind2, :bind3)", $alltuples);
+            OCICommit($db_conn);
+        }
+
             //Getting the values from user and insert data into the table
             
            //post tuple 
@@ -610,6 +630,8 @@ function handleInsertListingRequest() {
                     handleUpdateRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
                     handleInsertRequest();
+                } else if (array_key_exists('insertLocationRequest', $_POST)) {
+                    handleInsertLocationRequest();
                 } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
                     handleInsertListingRequest();
                 } else if (array_key_exists('insertReviewQueryRequest', $_POST)) {
@@ -643,6 +665,8 @@ function handleInsertListingRequest() {
                     handleDisplayRequest();
                 } else if (array_key_exists('viewUsersRequest', $_GET)) {
                     handleViewUsersRequest();
+                } else if (array_key_exists('viewLocationsRequest', $_GET)) {
+                    handleViewLocationsRequest();
                 }
 
 
@@ -652,13 +676,14 @@ function handleInsertListingRequest() {
 
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || 
         isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) ||
+        isset($_POST['insertLocationSubmit']) ||
         isset($_POST['insertAccountSubmit']) || isset($_POST['deleteAccountSubmit']) ||
         isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit']) ||
         isset($_POST['insertTicketSubmit']) || isset($_POST['resolveTicketSubmit'])) {
             echo "Finished execution.";
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
-        isset($_GET['viewUsersRequest'])) {
+        isset($_GET['viewUsersRequest']) || isset($_GET['viewLocationsRequest'])) {
             handleGETRequest();
         }
     

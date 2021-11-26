@@ -1,0 +1,20 @@
+
+<h2>Insert Values into Location</h2>
+<form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+    <input type="hidden" id="insertLocationRequest" name="insertLocationRequest">
+    Street Name: <input type="text" name="streetname"> <br /><br />
+    Street No.: <input type="text" name="streetno"> <br /><br />
+    Postal Code: <input type="text" name="postalcode"> <br /><br />
+
+    <input type="submit" value="Insert Location" name="insertLocationSubmit"></p>
+</form>
+
+<hr />
+
+<h2>View Locations</h2>
+<form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
+    <input type="hidden" id="viewLocationsRequest" name="viewLocationsRequest">
+    <input type="submit" value="View Locations" name="viewLocationsSubmit"></p>
+</form>
+
+<hr />
