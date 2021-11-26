@@ -38,6 +38,24 @@ function printLocations($result) { //prints locations
     echo "</table>";
 }
 
+function handleDeleteLocationRequest() {
+    global $db_conn;
+    
+    $tuple = array (
+        ":bind1" => $_POST['streetName'],
+        ":bind2" => $_POST['streetNo']
+    );
+
+    $alltuples = array (
+        $tuple
+    );
+
+
+    executeBoundSQL("delete from locationaddress where
+    streetname=:bind1 and streetno=:bind2", $alltuples);
+    OCICommit($db_conn);
+}
+
 ?>
 <!-- 
 echo "<br>Retrieved data from table demoTable:<br>";

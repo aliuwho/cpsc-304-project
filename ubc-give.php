@@ -639,8 +639,6 @@ function handleInsertListingRequest() {
                 } else if (array_key_exists('insertAccountRequest', $_POST)) {
                     handleInsertAccountRequest();
                 } else if (array_key_exists('deleteAccountRequest', $_POST)) {
-                    handleDeleteAccountRequest();
-                } else if (array_key_exists('deleteAccountRequest', $_POST)) {
                     handleSuspendAccountRequest();
                 } else if (array_key_exists('insertBroadcastRequest', $_POST)) {
                     handleInsertBroadcastRequest();
@@ -674,10 +672,22 @@ function handleInsertListingRequest() {
             }
         }
 
+        function handleDELETERequest() {
+            if (connectToDB()) {
+                if (array_key_exists('deleteLocationRequest', $_POST)) {
+                    handleDeleteLocationRequest();
+                } else if (array_key_exists('deleteAccountRequest', $_POST)) {
+                    handleDeleteAccountRequest();
+                } 
+
+                disconnectFromDB();
+            }
+        }
+
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || 
         isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) ||
         isset($_POST['insertLocationSubmit']) ||
-        isset($_POST['insertAccountSubmit']) || isset($_POST['deleteAccountSubmit']) ||
+        isset($_POST['insertAccountSubmit']) ||
         isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit']) ||
         isset($_POST['insertTicketSubmit']) || isset($_POST['resolveTicketSubmit'])) {
             echo "Finished execution.";
@@ -685,6 +695,9 @@ function handleInsertListingRequest() {
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
         isset($_GET['viewUsersRequest']) || isset($_GET['viewLocationsRequest'])) {
             handleGETRequest();
+        } else if (isset($_POST['deleteLocationSubmit']) || isset($_POST['deleteAccountSubmit']) ) {
+            echo "In delete requests.";
+            handleDELETERequest();
         }
     
 		?>

@@ -12,9 +12,19 @@
 <hr />
 
 <h2>View Locations</h2>
-<form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
+<form method="GET" action="ubc-give.php">
     <input type="hidden" id="viewLocationsRequest" name="viewLocationsRequest">
     <input type="submit" value="View Locations" name="viewLocationsSubmit"></p>
+</form>
+
+<hr />
+
+<h2>Delete a Location</h2>
+<form method="POST" action="ubc-give.php">
+    <input type="hidden" id="deleteLocationRequest" name="deleteLocationRequest">
+    Street Name: <input type="text" name="streetName"> <br /><br />
+    Street No.:  <input type="text" name="streetNo"> <br /><br />
+    <input type="submit" value="Delete Location" name="deleteLocationSubmit"></p>
 </form>
 
 <hr />
