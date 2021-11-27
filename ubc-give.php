@@ -49,21 +49,30 @@
             
             <input type="submit" value="InsertListing" name="insertListingSubmit"></p>
         </form>
+        
+        <hr />
+        <h2>Insert new Review</h2>
+        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
+            Item: <input type="text" name="insReviewDescription"> <br /><br />
+            
+            <input type="submit" value="InsertReview" name="insertReviewSubmit"></p>
+        </form>
 
         <hr />
         <h2>Insert new Request</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
+            <input type="hidden" id="insertRequestQueryRequest" name="insertRequestQueryRequest">
             Description: <input type="text" name="insDescription"> <br /><br />
-            <label>DropDownList Status</label>
+            <!-- <label>DropDownList Status</label>
             <select name ="status">
                 <option value=""> --Select--</option>
                 <option value="POST"> POST </option>
                 <option value="GET"> GET </option>
                 <option value="PUT"> PUT </option>
                 <option value="PATCH"> PATCH </option>
-                <option value="DELETE"> DELETE </option>
-            <input type="submit" value="InsertRequest" name="insertRequestSubmit"></p>
+                <option value="DELETE"> DELETE </option>-->
+ <input type="submit" value="InsertRequest" name="insertRequestSubmit"></p> 
         </form>
 
         <hr />
@@ -404,7 +413,7 @@ function handleInsertListingRequest() {
             $tuplePost = array (
                 ":bind0" => $postID,
                 ":bind1" => "Listing",
-                ":bind2" => 34,
+                ":bind2" => 0,
                 ":bind3" => $createdon,
                 ":bind4" => $createdon,
                 ":bind5" => $createdon,
@@ -578,25 +587,96 @@ function handleInsertListingRequest() {
             global $db_conn;
             //$postID= microtime() + floor(rand()*10000);
             $id = hexdec( uniqid() );
-            $today = date("j, n, Y");
-            $today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
-             
-            $timestamp = date('Y-m-d H:i:s');
-            $exp = date("j, n, Y+1");
-                $postID = $id;
-                $postType="Review";
-                $postStatus = "Open";
-                $account = 0;
-                $createdon = $today1;
-                $updatedOn =$today1;
-                $expire = $today1;
-                $pid = 9;
-                $requestDescription = $_POST['insDescription'];
-             executePlainSQL("insert into Post values ('$postID','$postType','$account',
-             '$createdon','$updatedon','$expire','$postStatus')");
-            executePlainSQL("insert into Review values ('$postID','$requestDescription',)");
+            $fulfilledid = hexdec( uniqid() );
+            $postID = $id;
+            $today = date('26/02/2010');
+            $postStatus = "Open";
+            //$today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
+            echo "<br>IM HERE1<br>";
+            echo "<br>IM HERE3<br>";
+            $tuplePost = array (
+                ":bind0" => $postID,
+                ":bind1" => "Listing",
+                ":bind2" => 0,
+                ":bind3" => $createdon,
+                ":bind4" => $createdon,
+                ":bind5" => $createdon,
+                ":bind6" => $postStatus
+            );
+            $allPosttuples = array (
+                $tuplePost
+            ); 
+            //Listing tuples 
+             $tuple = array (
+                ":bind0" => $postID,
+                ":bind1" => $_POST['insDescription'],
+                ":bind2" => 0,
+                ":bind3" => $today,
+                ":bind4" => 0,
+
+                
+            );
+            $alltuples = array (
+                $tuple
+            ); 
+            echo "<br>IM HER2E<br>";
+            executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind6)", $allPosttuples);
             OCICommit($db_conn);
+            echo "<br>IM HERE1<br>";
+            executeBoundSQL("insert into Request values(:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind4)", $alltuples);
+            echo "<br>IM HERE<br>";
+             OCICommit($db_conn);
+
+            // $timestamp = date('Y-m-d H:i:s');
+            // $exp = date("j, n, Y+1");
+            //     $postID = $id;
+            //     $postType="Review";
+            //     $postStatus = "Open";
+            //     $account = 0;
+            //     $createdon = $today1;
+            //     $updatedOn =$today1;
+            //     $expire = $today1;
+            //     $pid = 9;
+            //     $requestDescription = $_POST['insDescription'];
+            //  executePlainSQL("insert into Post values ('$postID','$postType','$account',
+            //  '$createdon','$updatedon','$expire','$postStatus')");
+            // executePlainSQL("insert into Review values ('$postID','$requestDescription',)");
+            // OCICommit($db_conn);
+
         }
+        function handleInsertReviewRequest() {
+            global $db_conn;
+            //$postID= microtime() + floor(rand()*10000);
+            $id = hexdec( uniqid() );
+            $fulfilledid = hexdec( uniqid() );
+            
+            $today = date('26/02/2010');
+            $postStatus = "Open";
+            //$today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
+            echo "<br>IM HERE1<br>";
+            $receiver_id=0;
+            $poster_id=0;
+            //Listing tuples 
+             $tuple = array (
+                ":bind0" => $id,
+                ":bind1" => $receiver_id,
+                ":bind2" => $poster_id,
+                ":bind3" => $_POST['insReviewDescription'],
+                ":bind3" => $today,
+                ":bind4" => 0,
+
+                
+            );
+            $alltuples = array (
+                $tuple
+            ); 
+            
+            echo "<br>IM HERE1<br>";
+            executeBoundSQL("insert into Review values(:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind4)", $alltuples);
+            echo "<br>IM HERE<br>";
+             OCICommit($db_conn);
+        }
+
 
         function handleCountRequest() {
             global $db_conn;
@@ -634,6 +714,8 @@ function handleInsertListingRequest() {
                     handleInsertLocationRequest();
                 } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
                     handleInsertListingRequest();
+                } else if (array_key_exists('insertRequestQueryRequest', $_POST)) {
+                    handleInsertRequestRequest();
                 } else if (array_key_exists('insertReviewQueryRequest', $_POST)) {
                     handleReviewRequest();
                 } else if (array_key_exists('insertAccountRequest', $_POST)) {
@@ -685,7 +767,9 @@ function handleInsertListingRequest() {
         }
 
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || 
-        isset($_POST['insertSubmit']) || isset($_POST['insertListingSubmit']) ||
+        isset($_POST['insertSubmit']) || 
+        isset($_POST['insertListingSubmit']) ||
+        isset($_POST['insertRequestSubmit']) ||
         isset($_POST['insertLocationSubmit']) ||
         isset($_POST['insertAccountSubmit']) ||
         isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit']) ||
