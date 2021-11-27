@@ -56,7 +56,72 @@ function handleDeleteLocationRequest() {
     OCICommit($db_conn);
 }
 
+function handleViewEmptyCategoriesRequest() {
+
+    $result = executePlainSQL("SELECT COUNT(*) FROM category WHERE name NOT IN (SELECT category FROM belongsto)");
+    echo "<br>" . printEmptyCategories($result) . "<br>";
+    
+}
+
+function handleViewRequestsByCategoryRequest() {
+
+    if(!empty($_GET['category'])) {
+        $selected = $_GET['category'];
+    } else {
+        echo 'Please select the value.';
+    }
+
+    $result = executePlainSQL("select post_description from request r join belongsto b
+    on r.post_id = b.post_id where b.category = '" . $selected . "'");
+    echo "<br>" . viewRequests($result, $selected) . "<br>";
+    
+}
+
+function printEmptyCategories($result) {
+    echo "<br>Number of empty categories: " . OCI_Fetch_Array($result, OCI_BOTH)[0] . "<br>";
+    //echo "<table>";
+    //echo "<tr><th>Number of empty categories:</th></tr>";
+
+    /* while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+       echo "<tr><td>" . $row[0] . "</td></tr>";
+    } */
+
+    echo "</table>";
+}
+
+function viewRequests($result, $selected) {
+    echo "<br>Requests in " . $selected . ":";
+
+    if (($result->num_rows) == 0){
+        echo "<br>No requests to display.<br>";
+    }
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+       echo "<br>" . $row[0] . "<br>";
+    }
+}
+
+function displayMenu($result) {
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        $name = $row[0];
+        echo "<tr><td>" . $row[0] . "</td></tr>";
+        $menuDisplay .= '<li>'. $name . '</li>';
+    }
+    echo $menuDisplay;
+}
+
+function populateMenu() {
+    global $db_conn;
+    $categories = executePlainSQL("SELECT name FROM Category");
+    echo "<option value='PLACEHOLDER'>" . "whoop" . "</option>";
+    echo "<option value='PLACEHOLDER'>" . $categories[0] . "</option>";
+    while ($row = OCI_Fetch_Array($categories, OCI_BOTH)) {
+        echo "<option value='PLACEHOLDER'>" . $row[0] . "</option>"; 
+    }
+    OCICommit($db_conn);
+}
+
 ?>
+
 <!-- 
 echo "<br>Retrieved data from table demoTable:<br>";
             echo "<table>";
