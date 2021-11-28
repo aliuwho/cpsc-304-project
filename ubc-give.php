@@ -174,8 +174,10 @@
         </form>
         <hr />
 
-        <?php
+        <?php 
+         include "./krish-remaining-queries.html";
         include "./louise-queries.html";
+        include "./krish-php.php";
         include 'louise-php.php';
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
 
