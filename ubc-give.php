@@ -22,7 +22,7 @@
     <body>
         <div class="column">
         <h2>Reset</h2>
-        <p>Click the reset button to reload default tables.</p>
+        <p>Click the reset button to clear the default tables.</p>
 
         <form method="POST" action="ubc-give.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
@@ -59,78 +59,7 @@
 
         <!-- <hr /> -->  
 
-        <h2>Create a new user account</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
-            Name: <input type="text" name="insertAccountName"> <br /><br />
-            Password: <input type="text" name="insertAccountPassword"> <br /><br />
-            Email: <input type="text" name="insertAccountEmail"> <br /><br />
-            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>Delete a user</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="deleteAccountRequest" name="deleteAccountRequest">
-            Account ID: <input type="text" name="deleteAccountID"> <br /><br />
-            <input type="submit" value="Delete Account" name="deleteAccountSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>Suspend a user</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="suspendAccountRequest" name="suspendAccountRequest">
-            User ID (Suspendee): <input type="text" name="suspendAccountAID"> <br /><br />
-            Moderator ID (Suspender): <input type="text" name="suspendAccountMID"> <br /><br />
-            <input type="submit" value="Suspend User" name="suspendAccountSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>View other users</h2>
-        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="viewUsersRequest" name="viewUsersRequest">
-            Your account ID: <input type="text" name="viewUserID"> <br /><br />
-            <input type="submit" value="View Other Users" name="viewUsersSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-        </div>
-        <div class="column">
-
-        <h2>Create a broadcast</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertBroadcastRequest" name="insertBroadcastRequest">
-            Broadcast message: <input type="text" name="insertBroadcastMessage"> <br /><br />
-            <input type="submit" value="Create New Broadcast" name="insertBroadcastSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>Write a ticket</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertTicketRequest" name="insertTicketRequest">
-            Your account ID: <input type="text" name="insertTicketAID"> <br /><br />
-            Brief description: <input type="text" name="insertTicketSubject"> <br /><br />
-            Category: <input type="text" name="insertTicketCategory"> <br /><br />
-            Priority (an integer where higher numbers indicate higher priority):<br /><input type="text" name="insertTicketPriority"> <br /><br />
-            <input type="submit" value="Create a New Ticket" name="insertTicketSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>Resolve a ticket</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="resolveTicketRequest" name="resolveTicketRequest">
-            Account ID for the ticket: <input type="text" name="resolveTicketTID"> <br /><br />
-            Moderator ID: <input type="text" name="resolveTicketMID"> <br /><br />
-            <input type="submit" value="Resolve Ticket" name="resolveTicketSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
+        
         <h2>Update Name in DemoTable</h2>
        
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -161,8 +90,10 @@
         <?php 
         include "./krish-remaining-queries.html";
         include "./louise-queries.html";
+        include "./amy-queries.html";
         include "./krish-php.php";
         include "./louise-php.php";
+        include "./amy-php.php";
         
         $success = True; //keep track of errors so it redirects the page only if there are no errors
         $db_conn = NULL; // edit the login credentials in connectToDB()
