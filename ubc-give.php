@@ -577,67 +577,7 @@
             OCICommit($db_conn);
         }
 
-        function handleInsertRequestRequest() {
-            global $db_conn;
-            //$postID= microtime() + floor(rand()*10000);
-            $id = hexdec( uniqid() );
-            $fulfilledid = hexdec( uniqid() );
-            $postID = $id;
-            $today = date('26/02/2010');
-            $postStatus = "Open";
-            //$today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
-            echo "<br>IM HERE1<br>";
-            echo "<br>IM HERE3<br>";
-            $tuplePost = array (
-                ":bind0" => $postID,
-                ":bind1" => "Listing",
-                ":bind2" => 0,
-                ":bind3" => $createdon,
-                ":bind4" => $createdon,
-                ":bind5" => $createdon,
-                ":bind6" => $postStatus
-            );
-            $allPosttuples = array (
-                $tuplePost
-            ); 
-            //Listing tuples 
-             $tuple = array (
-                ":bind0" => $postID,
-                ":bind1" => $_POST['insDescription'],
-                ":bind2" => 0,
-                ":bind3" => $today,
-                ":bind4" => 0,
-
-                
-            );
-            $alltuples = array (
-                $tuple
-            ); 
-            echo "<br>IM HER2E<br>";
-            executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind6)", $allPosttuples);
-            OCICommit($db_conn);
-            echo "<br>IM HERE1<br>";
-            executeBoundSQL("insert into Request values(:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind4)", $alltuples);
-            echo "<br>IM HERE<br>";
-             OCICommit($db_conn);
-
-            // $timestamp = date('Y-m-d H:i:s');
-            // $exp = date("j, n, Y+1");
-            //     $postID = $id;
-            //     $postType="Review";
-            //     $postStatus = "Open";
-            //     $account = 0;
-            //     $createdon = $today1;
-            //     $updatedOn =$today1;
-            //     $expire = $today1;
-            //     $pid = 9;
-            //     $requestDescription = $_POST['insDescription'];
-            //  executePlainSQL("insert into Post values ('$postID','$postType','$account',
-            //  '$createdon','$updatedon','$expire','$postStatus')");
-            // executePlainSQL("insert into Review values ('$postID','$requestDescription',)");
-            // OCICommit($db_conn);
-
-        }
+        
         function handleInsertReviewRequest() {
             global $db_conn;
             //$postID= microtime() + floor(rand()*10000);
@@ -754,10 +694,15 @@
 
         function handleDELETERequest() {
             if (connectToDB()) {
+                echo "<br>IM HERE1<br>";
                 if (array_key_exists('deleteLocationRequest', $_POST)) {
                     handleDeleteLocationRequest();
                 } else if (array_key_exists('deleteAccountRequest', $_POST)) {
                     handleDeleteAccountRequest();
+                } 
+                 else if (array_key_exists('deleteListingRequest', $_POST)) {
+                    echo "<br>IM HERE1<br>";
+                    handleDeleteListingRequest();
                 } 
 
                 disconnectFromDB();
