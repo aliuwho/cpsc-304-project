@@ -726,6 +726,7 @@
         isset($_POST['insertLocationSubmit']) ||
         isset($_POST['insertAccountSubmit']) ||
         isset($_POST['fulfillListingRequest']) ||
+        isset($_POST['countRequestF']) ||
         isset($_POST['insertReviewQueryRequest']) ||
         isset($_POST['postCategoryRequest']) ||
         isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit']) ||

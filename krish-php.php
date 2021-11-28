@@ -111,15 +111,16 @@ function handleUpdateListing() {
     OCICommit($db_conn);
     //executeBoundSQL("update request set fulfilled_on=1 where post_id=:bind1", $alltuples); 
         }
+
 function handleCountFulfilledRequest() {
-            global $db_conn;
+    global $db_conn;
 
-            $result = executePlainSQL("SELECT Count(*) FROM Request WHERE fulfilled=1");
+    $result = executePlainSQL("SELECT Count(*) FROM Request WHERE fulfilled=1");
 
-            if (($row = oci_fetch_row($result)) != false) {
-                echo "<br> The number of tuples fulfilled in Request: " . $row[0] . "<br>";
-            }
-        }
+    if (($row = oci_fetch_row($result)) != false) {
+    echo "<br> The number of tuples fulfilled in Request: " . $row[0] . "<br>";
+    }
+}
 
 
 function handlePostToCat(){
