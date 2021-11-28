@@ -20,11 +20,12 @@ function handleInsertLocationRequest() {
 function handleViewLocationsRequest() {
 
     $result = executePlainSQL("select * from LocationAddress");
+    $locations = printLocations($result);
     echo "<br>" . printLocations($result) . "<br>";
 
 }
 
-function printLocations($result) { //prints locations
+/* function printLocations($result) { //prints locations
     echo "<br>All Locations:<br>";
     echo "<table>";
     echo "<tr><th>StreetName</th> &nbsp;  <th>StreetNo</th> &nbsp; <th>PostalCode</th></tr>";
@@ -36,6 +37,21 @@ function printLocations($result) { //prints locations
     }
 
     echo "</table>";
+} */
+
+function printLocations($result) { //prints locations
+    $locations = "<br>All Locations:<br>";
+    $locations .= "<table>";
+    $locations .= "<tr><th>StreetName</th> &nbsp;  <th>StreetNo</th> &nbsp; <th>PostalCode</th></tr>";
+
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+       $locations .= "<tr><td>" . $row["STREETNAME"] . "</td><td>"
+        . $row["STREETNO"] . "</td><td>"
+        . $row["POSTALCODE"] . "</td></tr>";
+    }
+
+    $locations .= "</table>";
+    return $locations;
 }
 
 function handleDeleteLocationRequest() {
@@ -64,6 +80,7 @@ function handleViewEmptyCategoriesRequest() {
 }
 
 function handleViewRequestsByCategoryRequest() {
+    echo "View";
 
     if(!empty($_GET['category'])) {
         $selected = $_GET['category'];
@@ -91,12 +108,14 @@ function printEmptyCategories($result) {
 
 function viewRequests($result, $selected) {
     echo "<br>Requests in " . $selected . ":";
+    $empty = true;
 
-    if (($result->num_rows) == 0){
-        echo "<br>No requests to display.<br>";
-    }
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
        echo "<br>" . $row[0] . "<br>";
+       $empty = false;
+    }
+    if ($empty) {
+        echo "<br>No requests to display.<br>";
     }
 }
 
@@ -109,26 +128,4 @@ function displayMenu($result) {
     echo $menuDisplay;
 }
 
-function populateMenu() {
-    global $db_conn;
-    $categories = executePlainSQL("SELECT name FROM Category");
-    echo "<option value='PLACEHOLDER'>" . "whoop" . "</option>";
-    echo "<option value='PLACEHOLDER'>" . $categories[0] . "</option>";
-    while ($row = OCI_Fetch_Array($categories, OCI_BOTH)) {
-        echo "<option value='PLACEHOLDER'>" . $row[0] . "</option>"; 
-    }
-    OCICommit($db_conn);
-}
-
 ?>
-
-<!-- 
-echo "<br>Retrieved data from table demoTable:<br>";
-            echo "<table>";
-            echo "<tr><th>ID</th><th>Name</th></tr>";
-
-            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]" 
-            }
-
-            echo "</table>"; -->
