@@ -78,6 +78,7 @@ function handleDeleteListingRequest() {
             OCICommit($db_conn);
         }
 function handleFulfillRequest() {
+    echo "<br>IM HER2E<br>";
     global $db_conn;
     $tuple = array (
         ":bind1" => $_POST['PostIDR'],
@@ -93,5 +94,76 @@ function handleFulfillRequest() {
     OCICommit($db_conn);
     executeBoundSQL("update request set fulfilled_on=1 where post_id=:bind1", $alltuples); 
         }
-        
+function handleUpdateListing() {
+    echo "<br>IM HERzE<br>";
+    global $db_conn;
+    $tuple = array (
+        ":bind1" => $_POST['PostIDU'],
+        ":bind2" => $_POST['NewItem'],
+        //":bind3" => 1
+    );
+
+    $alltuples = array (
+        $tuple
+    );
+
+    executeBoundSQL("update request set item=:bind2 where post_id=:bind1", $alltuples);
+    OCICommit($db_conn);
+    //executeBoundSQL("update request set fulfilled_on=1 where post_id=:bind1", $alltuples); 
+        }
+function handleCountFulfilledRequest() {
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT Count(*) FROM Request WHERE fulfilled=1");
+
+            if (($row = oci_fetch_row($result)) != false) {
+                echo "<br> The number of tuples fulfilled in Request: " . $row[0] . "<br>";
+            }
+        }
+
+
+function handlePostToCat(){
+    echo "<br>IM HERzE<br>";
+    global $db_conn;
+    $tuple = array (
+        ":bind1" => $_POST['CategoryP'],
+        ":bind2" => $_POST['POSTIDC']
+
+        //":bind2" => $_POST['NewItem'],
+        //":bind3" => 1
+    );
+
+    $alltuples = array (
+        $tuple
+    );
+
+    executeBoundSQL("update post set post_type=:bind1 where post_id=:bind2", $alltuples);
+    OCICommit($db_conn);
+
+}       
+// function handleSelectCategoryRequest() {
+//             global $db_conn;
+
+//              $result = executePlainSQL("SELECT * FROM Request WHERE");
+// 		printResult($result);
+            
+//             if (($row = oci_fetch_row($result)) != false) {
+//                 echo "<br> The number of tuples in Listing: " . $row[0] . "<br>";
+//             }
+//         }
+
+// function viewPost($result, $selected){
+//     echo "<br>Posts in " . $selected . ":";
+//     $empty = true;
+
+//     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+//        echo "<br>" . $row[0] . "<br>";
+//        $empty = false;
+//     }
+//     if ($empty) {
+//         echo "<br>No Posts in Category.<br>";
+//     }
+
+// }
+
 ?>

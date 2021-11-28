@@ -642,14 +642,18 @@ function handleInsertListingRequest() {
                     handleResetRequest();
                 } else if (array_key_exists('updateQueryRequest', $_POST)) {
                     handleUpdateRequest();
+                } else if (array_key_exists('fulfillListingRequest', $_POST)) {
+                    handleFulfillRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
                     handleInsertRequest();
                 } else if (array_key_exists('insertLocationRequest', $_POST)) {
                     handleInsertLocationRequest();
                 } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
                     handleInsertListingRequest();
-                } else if (array_key_exists('insertRequestQueryRequest', $_POST)) {
-                    handleInsertRequestRequest();
+                }else if (array_key_exists('insertListingQueryRequest', $_POST)) {
+                    handleInsertListingRequest();
+                }else if (array_key_exists('postCategoryRequest', $_POST)) {
+                    handlePostToCat();
                 } else if (array_key_exists('insertReviewQueryRequest', $_POST)) {
                     handleReviewRequest();
                 } else if (array_key_exists('insertAccountRequest', $_POST)) {
@@ -677,7 +681,9 @@ function handleInsertListingRequest() {
                     handleCountRequest();
                 } else if (array_key_exists('displayTuples', $_GET)) {
                     handleDisplayRequest();
-                } else if (array_key_exists('viewUsersRequest', $_GET)) {
+                } else if (array_key_exists('countRequestF', $_GET)) {
+                    handleCountFulfilledRequest();
+                }else if (array_key_exists('viewUsersRequest', $_GET)) {
                     handleViewUsersRequest();
                 } else if (array_key_exists('viewLocationsRequest', $_GET)) {
                     handleViewLocationsRequest();
@@ -711,12 +717,16 @@ function handleInsertListingRequest() {
         isset($_POST['insertRequestSubmit']) ||
         isset($_POST['insertLocationSubmit']) ||
         isset($_POST['insertAccountSubmit']) ||
+        isset($_POST['handleFulfillRequest']) ||
+        isset($_POST['insertReviewQueryRequest']) ||
+        isset($_POST['postCategoryRequest']) ||
         isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit']) ||
         isset($_POST['insertTicketSubmit']) || isset($_POST['resolveTicketSubmit'])) {
             echo "Finished execution.";
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
-        isset($_GET['viewUsersRequest']) || isset($_GET['viewLocationsRequest'])) {
+        isset($_GET['viewUsersRequest']) || isset($_GET['viewLocationsRequest'])
+        || isset($_GET['countRequestF'])) {
             handleGETRequest();
         } else if (isset($_POST['deleteLocationSubmit']) || isset($_POST['deleteAccountSubmit'])|| isset($_POST['deleteListingSubmit'])) {
             echo "In delete requests.";
