@@ -642,6 +642,8 @@
                     handleResetRequest();
                 } else if (array_key_exists('updateQueryRequest', $_POST)) {
                     handleUpdateRequest();
+                }else if (array_key_exists('updateListingRequest', $_POST)) {
+                    handleUpdateListing();
                 } else if (array_key_exists('fulfillListingRequest', $_POST)) {
                     handleFulfillRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
@@ -650,8 +652,8 @@
                     handleInsertLocationRequest();
                 } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
                     handleInsertListingRequest();
-                }else if (array_key_exists('insertListingQueryRequest', $_POST)) {
-                    handleInsertListingRequest();
+                }else if (array_key_exists('insertRequestQueryRequest', $_POST)) {
+                    handleInsertRequestRequest();
                 }else if (array_key_exists('postCategoryRequest', $_POST)) {
                     handlePostToCat();
                 } else if (array_key_exists('insertReviewQueryRequest', $_POST)) {
@@ -716,12 +718,14 @@
         }
 
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || 
+		isset($_POST['updateListingRequest']) || 
         isset($_POST['insertSubmit']) || 
         isset($_POST['insertListingSubmit']) ||
         isset($_POST['insertRequestSubmit']) ||
+        isset($_POST['insertRequestQueryRequest']) ||
         isset($_POST['insertLocationSubmit']) ||
         isset($_POST['insertAccountSubmit']) ||
-        isset($_POST['handleFulfillRequest']) ||
+        isset($_POST['fulfillListingRequest']) ||
         isset($_POST['insertReviewQueryRequest']) ||
         isset($_POST['postCategoryRequest']) ||
         isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit']) ||
@@ -733,7 +737,7 @@
         || isset($_GET['countRequestF'])
         || isset($_GET['viewEmptyCategoriesRequest']) ||  isset($_GET['viewRequestsByCategoryRequest'])) {
             handleGETRequest();
-        } else if (isset($_POST['deleteLocationSubmit']) || isset($_POST['deleteAccountSubmit']) ) {
+        } else if (isset($_POST['deleteLocationSubmit']) || isset($_POST['deleteAccountSubmit']) || isset($_POST['deleteListingSubmit'])) {
             handleDELETERequest();
         }
     

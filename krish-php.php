@@ -92,7 +92,7 @@ function handleFulfillRequest() {
 
     executeBoundSQL("update request set fulfilled=:bind2 where post_id=:bind1", $alltuples);
     OCICommit($db_conn);
-    executeBoundSQL("update request set fulfilled_on=1 where post_id=:bind1", $alltuples); 
+    executeBoundSQL("update request set fulfilled_on=TO_DATE('26/02/2010', 'DD/MM/YYYY') where post_id=:bind1", $alltuples); 
         }
 function handleUpdateListing() {
     echo "<br>IM HERzE<br>";
@@ -107,7 +107,7 @@ function handleUpdateListing() {
         $tuple
     );
 
-    executeBoundSQL("update request set item=:bind2 where post_id=:bind1", $alltuples);
+    executeBoundSQL("update listing set item=:bind2 where post_id=:bind1", $alltuples);
     OCICommit($db_conn);
     //executeBoundSQL("update request set fulfilled_on=1 where post_id=:bind1", $alltuples); 
         }
