@@ -1,7 +1,3 @@
-<?php
-include 'louise-php.php';
-?>
-<div class="column">
 <h2>Insert Values into Location</h2>
 <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
     <input type="hidden" id="insertLocationRequest" name="insertLocationRequest">
@@ -12,17 +8,13 @@ include 'louise-php.php';
     <input type="submit" value="Insert Location" name="insertLocationSubmit"></p>
 </form>
 
-<!-- <hr /> -->  
-
 <h2>View Locations</h2>
 <form method="GET" action="ubc-give.php">
     <input type="hidden" id="viewLocationsRequest" name="viewLocationsRequest">
     <input type="submit" value="View Locations" name="viewLocationsSubmit"></p>
-    <?php echo $locations;
-    echo $test; ?>
+<!--     <?php echo $locations;
+    echo $test; ?> -->
 </form>
-
-<!-- <hr /> -->  
 
 <h2>Delete a Location</h2>
 <form method="POST" action="ubc-give.php">
@@ -32,16 +24,12 @@ include 'louise-php.php';
     <input type="submit" value="Delete Location" name="deleteLocationSubmit"></p>
 </form>
 
-<!-- <hr /> -->  
-
 
 <h2>Get Empty Categories</h2>
 <form method="GET" action="ubc-give.php">
     <input type="hidden" id="viewEmptyCategoriesRequest" name="viewEmptyCategoriesRequest">
-    <input type="submit" value="View Empty Categories" name="viewEmptyCategoreisSubmit"></p>
+    <input type="submit" value="View Empty Categories" name="viewEmptyCategoriesSubmit"></p>
 </form>
-
-<!-- <hr /> -->  
 
 <h2>View Requests By Category</h2>
 <form method="GET" action="ubc-give.php">
@@ -52,8 +40,3 @@ include 'louise-php.php';
     ?>
     <input type="submit" value="View Requests" name="viewRequestsByCategorySubmit"></p>
 </form>
-
-
-
-<!-- <hr /> -->  
-</div>

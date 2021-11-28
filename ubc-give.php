@@ -54,7 +54,7 @@
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertRequestQueryRequest" name="insertRequestQueryRequest">
             Description: <input type="text" name="insDescription"> <br /><br />
- <input type="submit" value="InsertRequest" name="insertRequestSubmit"></p> 
+        <input type="submit" value="InsertRequest" name="insertRequestSubmit"></p> 
         </form>
 
         <!-- <hr /> -->  
@@ -97,8 +97,8 @@
         </form>
 
         <!-- <hr /> -->  
-</div>
-<div class="column">
+        </div>
+        <div class="column">
 
         <h2>Create a broadcast</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -162,8 +162,8 @@
         include "./krish-remaining-queries.html";
         include "./louise-queries.html";
         include "./krish-php.php";
-        include 'louise-php.php';
-
+        include "./louise-php.php";
+        
         $success = True; //keep track of errors so it redirects the page only if there are no errors
         $db_conn = NULL; // edit the login credentials in connectToDB()
         $show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
@@ -327,7 +327,6 @@
                 $tuple
             );
 
-
             executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
             OCICommit($db_conn);
         }
@@ -341,6 +340,7 @@
                     echo "<option value='" . $row['NAME'] . "'>" . $row['NAME'] . "</option>";
                 }
             echo "</select>";
+            disconnectFromDB();
             
         } 
        
@@ -363,7 +363,7 @@
         }
 
            
-function handleInsertListingRequest() {
+        function handleInsertListingRequest() {
             global $db_conn;
             echo "<br>IM HERE<br>";
             //$postID= microtime() + floor(rand()*10000);
@@ -687,6 +687,10 @@ function handleInsertListingRequest() {
                     handleViewUsersRequest();
                 } else if (array_key_exists('viewLocationsRequest', $_GET)) {
                     handleViewLocationsRequest();
+                } else if (array_key_exists('viewEmptyCategoriesRequest', $_GET)) {
+                    handleViewEmptyCategoriesRequest();
+                } else if (array_key_exists('viewRequestsByCategoryRequest', $_GET)) {
+                    handleViewRequestsByCategoryRequest();
                 }
 
 
@@ -726,10 +730,10 @@ function handleInsertListingRequest() {
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
         isset($_GET['viewUsersRequest']) || isset($_GET['viewLocationsRequest'])
-        || isset($_GET['countRequestF'])) {
+        || isset($_GET['countRequestF'])
+        || isset($_GET['viewEmptyCategoriesRequest']) ||  isset($_GET['viewRequestsByCategoryRequest'])) {
             handleGETRequest();
-        } else if (isset($_POST['deleteLocationSubmit']) || isset($_POST['deleteAccountSubmit'])|| isset($_POST['deleteListingSubmit'])) {
-            echo "In delete requests.";
+        } else if (isset($_POST['deleteLocationSubmit']) || isset($_POST['deleteAccountSubmit']) ) {
             handleDELETERequest();
         }
     

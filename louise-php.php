@@ -20,12 +20,11 @@ function handleInsertLocationRequest() {
 function handleViewLocationsRequest() {
 
     $result = executePlainSQL("select * from LocationAddress");
-    $locations = printLocations($result);
     echo "<br>" . printLocations($result) . "<br>";
 
 }
 
-/* function printLocations($result) { //prints locations
+function printLocations($result) { //prints locations
     echo "<br>All Locations:<br>";
     echo "<table>";
     echo "<tr><th>StreetName</th> &nbsp;  <th>StreetNo</th> &nbsp; <th>PostalCode</th></tr>";
@@ -37,21 +36,6 @@ function handleViewLocationsRequest() {
     }
 
     echo "</table>";
-} */
-
-function printLocations($result) { //prints locations
-    $locations = "<br>All Locations:<br>";
-    $locations .= "<table>";
-    $locations .= "<tr><th>StreetName</th> &nbsp;  <th>StreetNo</th> &nbsp; <th>PostalCode</th></tr>";
-
-    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-       $locations .= "<tr><td>" . $row["STREETNAME"] . "</td><td>"
-        . $row["STREETNO"] . "</td><td>"
-        . $row["POSTALCODE"] . "</td></tr>";
-    }
-
-    $locations .= "</table>";
-    return $locations;
 }
 
 function handleDeleteLocationRequest() {
@@ -73,14 +57,12 @@ function handleDeleteLocationRequest() {
 }
 
 function handleViewEmptyCategoriesRequest() {
-
     $result = executePlainSQL("SELECT COUNT(*) FROM category WHERE name NOT IN (SELECT category FROM belongsto)");
     echo "<br>" . printEmptyCategories($result) . "<br>";
     
 }
 
 function handleViewRequestsByCategoryRequest() {
-    echo "View";
 
     if(!empty($_GET['category'])) {
         $selected = $_GET['category'];
@@ -103,7 +85,7 @@ function printEmptyCategories($result) {
        echo "<tr><td>" . $row[0] . "</td></tr>";
     } */
 
-    echo "</table>";
+    //echo "</table>";
 }
 
 function viewRequests($result, $selected) {
