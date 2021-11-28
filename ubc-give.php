@@ -15,12 +15,14 @@
   OCILogon below to be your ORACLE username and password -->
 <html>
     <head>
+        <link rel="stylesheet" href="index.css">
         <title>UBC GIVE</title>
     </head>
 
     <body>
+        <div class="column">
         <h2>Reset</h2>
-        <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+        <p>Click the reset button to reload default tables.</p>
 
         <form method="POST" action="ubc-give.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
@@ -28,19 +30,7 @@
             <p><input type="submit" value="Reset" name="reset"></p>
         </form>
 
-        <hr />
-
-<!--         <h2>Insert Values into DemoTable</h2>
-        <form method="POST" action="ubc-give.php">
-            <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            Number: <input type="text" name="insNo"> <br /><br />
-            Name: <input type="text" name="insName"> <br /><br />
-
-            <input type="submit" value="Insert" name="insertSubmit"></p>
-        </form> 
-
-        <hr /> -->
-       
+        <!-- <hr /> -->     
 
         <h2>Insert new Listing</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -50,7 +40,7 @@
             <input type="submit" value="InsertListing" name="insertListingSubmit"></p>
         </form>
         
-        <hr />
+        <!-- <hr /> -->  
         <h2>Insert new Review</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
@@ -59,23 +49,15 @@
             <input type="submit" value="InsertReview" name="insertReviewSubmit"></p>
         </form>
 
-        <hr />
+        <!-- <hr /> -->  
         <h2>Insert new Request</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertRequestQueryRequest" name="insertRequestQueryRequest">
             Description: <input type="text" name="insDescription"> <br /><br />
-            <!-- <label>DropDownList Status</label>
-            <select name ="status">
-                <option value=""> --Select--</option>
-                <option value="POST"> POST </option>
-                <option value="GET"> GET </option>
-                <option value="PUT"> PUT </option>
-                <option value="PATCH"> PATCH </option>
-                <option value="DELETE"> DELETE </option>-->
  <input type="submit" value="InsertRequest" name="insertRequestSubmit"></p> 
         </form>
 
-        <hr />
+        <!-- <hr /> -->  
 
         <h2>Create a new user account</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -86,7 +68,7 @@
             <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
         </form>
 
-        <hr />
+        <!-- <hr /> -->  
 
         <h2>Delete a user</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -95,7 +77,7 @@
             <input type="submit" value="Delete Account" name="deleteAccountSubmit"></p>
         </form>
 
-        <hr />
+        <!-- <hr /> -->  
 
         <h2>Suspend a user</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -105,7 +87,7 @@
             <input type="submit" value="Suspend User" name="suspendAccountSubmit"></p>
         </form>
 
-        <hr />
+        <!-- <hr /> -->  
 
         <h2>View other users</h2>
         <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -114,7 +96,9 @@
             <input type="submit" value="View Other Users" name="viewUsersSubmit"></p>
         </form>
 
-        <hr />
+        <!-- <hr /> -->  
+</div>
+<div class="column">
 
         <h2>Create a broadcast</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -123,7 +107,7 @@
             <input type="submit" value="Create New Broadcast" name="insertBroadcastSubmit"></p>
         </form>
 
-        <hr />
+        <!-- <hr /> -->  
 
         <h2>Write a ticket</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -135,7 +119,7 @@
             <input type="submit" value="Create a New Ticket" name="insertTicketSubmit"></p>
         </form>
 
-        <hr />
+        <!-- <hr /> -->  
 
         <h2>Resolve a ticket</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -145,11 +129,10 @@
             <input type="submit" value="Resolve Ticket" name="resolveTicketSubmit"></p>
         </form>
 
-        <hr />
+        <!-- <hr /> -->  
 
-        <!-- <h2>Update Name in DemoTable</h2>
-        <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
-
+        <h2>Update Name in DemoTable</h2>
+       
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
             Old Name: <input type="text" name="oldName"> <br /><br />
@@ -158,28 +141,28 @@
             <input type="submit" value="Update" name="updateSubmit"></p>
         </form>
 
-        <hr /> -->
+        <!-- <hr /> -->  
 
         <h2>Count the Tuples in Listing</h2>
         <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
             <input type="submit" name="countTuples"></p>
         </form>
-        <hr />
+        <!-- <hr /> -->  
 
         <h2>Display the Tuples in Listing</h2>
         <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
         </form>
-        <hr />
+        
+
 
         <?php 
-         include "./krish-remaining-queries.html";
+        include "./krish-remaining-queries.html";
         include "./louise-queries.html";
         include "./krish-php.php";
         include 'louise-php.php';
-		//this tells the system that it's no longer just parsing html; it's now parsing PHP
 
         $success = True; //keep track of errors so it redirects the page only if there are no errors
         $db_conn = NULL; // edit the login credentials in connectToDB()
@@ -348,6 +331,18 @@
             executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
             OCICommit($db_conn);
         }
+
+        function populateDropDown() {
+            connectToDB();
+            $result = executePlainSQL("SELECT name from Category");
+            echo "<select name='category'>";
+                echo "<option value=''>--Select--</option>";
+                while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                    echo "<option value='" . $row['NAME'] . "'>" . $row['NAME'] . "</option>";
+                }
+            echo "</select>";
+            
+        } 
        
         function handleListingInsertRequest() {
             global $db_conn;
@@ -367,9 +362,6 @@
             OCICommit($db_conn);
         }
 
-            //Getting the values from user and insert data into the table
-            
-           //post tuple 
            
 function handleInsertListingRequest() {
             global $db_conn;
@@ -787,5 +779,6 @@ function handleInsertListingRequest() {
         }
     
 		?>
+        </table>
 	</body>
 </html>
