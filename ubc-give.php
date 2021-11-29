@@ -97,9 +97,6 @@
         </form>
 
         <!-- <hr /> -->  
-        </div>
-        <div class="column">
-
         <h2>Create a broadcast</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertBroadcastRequest" name="insertBroadcastRequest">
@@ -108,6 +105,9 @@
         </form>
 
         <!-- <hr /> -->  
+        </div>
+        <div class="column">
+
 
         <h2>Write a ticket</h2>
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -131,7 +131,7 @@
 
         <!-- <hr /> -->  
 
-        <h2>Update Name in DemoTable</h2>
+        <h2>Update Account Name</h2>
        
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
@@ -331,7 +331,7 @@
             OCICommit($db_conn);
         }
 
-        function populateDropDown() {
+        function categoryDropDown() {
             connectToDB();
             $result = executePlainSQL("SELECT name from Category");
             echo "<select name='category'>";
@@ -342,6 +342,18 @@
             echo "</select>";
             disconnectFromDB();
             
+        }
+        
+        function itemDropDown() {
+            connectToDB();
+            $result = executePlainSQL("SELECT item from Listing");
+            echo "<select name='item'>";
+                echo "<option value=''>--Select--</option>";
+                while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                    echo "<option value='" . $row['ITEM'] . "'>" . $row['ITEM'] . "</option>";
+                }
+            echo "</select>";
+            disconnectFromDB();
         } 
        
         function handleListingInsertRequest() {
@@ -693,8 +705,13 @@
                     handleViewEmptyCategoriesRequest();
                 } else if (array_key_exists('viewRequestsByCategoryRequest', $_GET)) {
                     handleViewRequestsByCategoryRequest();
+                } else if (array_key_exists('viewCategoryCountRequest', $_GET)) {
+                    handleViewCategoryCountRequest();
+                } else if (array_key_exists('viewPopularCategoriesRequest', $_GET)) {
+                    handleViewPopularCategoriesRequest();
+                } else if (array_key_exists('listingInfoRequest', $_GET)) {
+                    handleListingInfoRequest();
                 }
-
 
                 disconnectFromDB();
             }
@@ -736,7 +753,9 @@
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
         isset($_GET['viewUsersRequest']) || isset($_GET['viewLocationsRequest'])
         || isset($_GET['countRequestF'])
-        || isset($_GET['viewEmptyCategoriesRequest']) ||  isset($_GET['viewRequestsByCategoryRequest'])) {
+        || isset($_GET['viewEmptyCategoriesRequest']) ||  isset($_GET['viewRequestsByCategoryRequest'])
+        ||  isset($_GET['viewCategoryCountRequest']) ||   isset($_GET['viewPopularCategoriesRequest'])
+        ||  isset($_GET['listingInfoRequest']) || isset($_GET['listingInfoSubmit'])) {
             handleGETRequest();
         } else if (isset($_POST['deleteLocationSubmit']) || isset($_POST['deleteAccountSubmit']) || isset($_POST['deleteListingSubmit'])) {
             handleDELETERequest();
