@@ -93,8 +93,8 @@ function handleSuspendAccountRequest()
 
     // Getting the values from user and insert data into the table
     $tuple = array(
-        ":bind1" => $_POST['deleteAccountAID'],
-        ":bind2" => $_POST['deleteAccountMID'],
+        ":bind1" => $_POST['suspendAccountAID'],
+        ":bind2" => $_POST['suspendAccountMID'],
     );
 
     $alltuples = array(
@@ -118,6 +118,12 @@ function handleDeleteAccountRequest()
         $tuple,
     );
 
+    // we need to remove all data associated with an account
+    $result = executeBoundSQL("SELECT count(*) FROM moderator where id=:bind1", $alltuples);
+    if (($row = oci_fetch_row($result)) != false) {
+        echo "<br> The number of tuples in Moderator: " . $row[0] . "<br>";
+    }
+    executeBoundSQL("delete from moderator where id=:bind1", $alltuples);
     executeBoundSQL("delete from account where id=:bind1", $alltuples);
     OCICommit($db_conn);
 }
