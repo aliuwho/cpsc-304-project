@@ -8,8 +8,6 @@ function handleInsertRequestRequest() {
     $today = date('26/02/2010');
     $postStatus = "Open";
     //$today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
-    echo "<br>IM HERE1<br>";
-    echo "<br>IM HERE3<br>";
     $tuplePost = array (
         ":bind0" => $postID,
         ":bind1" => "Listing",

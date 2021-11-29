@@ -57,7 +57,7 @@
         <input type="submit" value="Insert Request" name="insertRequestSubmit"></p> 
         </form>
         
-        <h2>Update Name in Account</h2>
+<!--         <h2>Update Name in Account</h2>
        
         <form method="POST" action="ubc-give.php"> 
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
@@ -65,7 +65,7 @@
             New Name: <input type="text" name="newName"> <br /><br />
 
             <input type="submit" value="Update" name="updateSubmit"></p>
-        </form>
+        </form> -->
 
         <h2>Queries for Listings</h2>
         <form method="GET" action="ubc-give.php"> 
@@ -157,13 +157,13 @@
             }
         }
 
-        function printResult($result) { //prints results from a select statement
-            echo "<br>Retrieved data from table demoTable:<br>";
+        function printListings($result) { //prints results from a select statement
+            echo "<br>All Listings:<br>";
             echo "<table>";
-            echo "<tr><th>ID</th><th>Name</th></tr>";
+            echo "<tr><th>ID</th><th>Item</th></tr>";
 
             while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]" 
+                echo "<tr><td>" . $row["POST_ID"] . "</td><td>" . $row["ITEM"] . "</td></tr>"; //or just use "echo $row[0]" 
             }
 
             echo "</table>";
@@ -415,12 +415,9 @@
         function handleDisplayRequest() {
             global $db_conn;
 
-             $result = executePlainSQL("SELECT * FROM Listing");
-		printResult($result);
+            $result = executePlainSQL("SELECT * FROM Listing");
+		    printListings($result);
             
-            if (($row = oci_fetch_row($result)) != false) {
-                echo "<br> The number of tuples in Listing: " . $row[0] . "<br>";
-            }
         } 
 
 
@@ -458,7 +455,7 @@
                 } else if (array_key_exists('resolveTicketRequest', $_POST)) {
                     handleResolveTicketRequest();
                 }
-
+                echo "Database updated.";
                 disconnectFromDB();
             }
         }
@@ -503,7 +500,7 @@
                 } else if (array_key_exists('deleteListingRequest', $_POST)) {
                     handleDeleteListingRequest();
                 } 
-
+                echo "Executed deletion.";
                 disconnectFromDB();
             }
         }
