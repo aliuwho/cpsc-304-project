@@ -91,8 +91,8 @@
         include "./krish-remaining-queries.html";
         include "./louise-queries.html";
         include "./amy-queries.html";
-        // include "./krish-php.php";
-        // include "./louise-php.php";
+        include "./krish-php.php";
+        include "./louise-php.php";
         include "./amy-php.php";
         
         $success = True; //keep track of errors so it redirects the page only if there are no errors
@@ -183,7 +183,7 @@
 
             // Your username is ora_(CWL_ID) and the password is a(student number). For example, 
 			// ora_platypus is the username and a12345678 is the password.
-            $db_conn = OCILogon("ora_kthukral", "a69843365", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_aimyul", "a12757563", "dbhost.students.cs.ubc.ca:1522/stu");
 
             if ($db_conn) {
                 debugAlertMessage("Database is Connected");
