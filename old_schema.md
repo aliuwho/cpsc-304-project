@@ -1,5 +1,5 @@
 # Schema
-Primary keys are __underlined__ and foreign keys are in **bold**. Partial keys are *italicized*.
+Primary keys are __underlined__ and foreign keys are in **bold**.
 All id attributes must be unique within the table.
 
 
