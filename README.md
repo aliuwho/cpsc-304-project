@@ -16,6 +16,15 @@ Check out our visual timeline [here](https://www.preceden.com/timelines/787520-u
 
 ---
 
+
+## Disclaimer
+
+Our task breakdown below is being kept for reference; our actual implementation includes vastly different functionality for two reasons:
+1. Full functionality for this application will take much more time than we could devote this semester. Our skeleton is in place, and pieces can get filled in with time.
+2. At the time we planned our tasks for the project, our understanding of aggregations, division, and nested queries was limited or entirely incorrect. As a result, the functionality we implemented to fulfill project requirements varies from what was intended in our earlier milestones.
+---
+
+
 ## Task Breakdown
 
 1. Backend/database (finished by Nov 9)
@@ -78,7 +87,9 @@ _We will individually integrate the frontend corresponding to our backend tasks 
 ## Potential Challenges
 
 Time management: working consistently, setting up meetings and coordinating schedules
+
 Achieving usable functionality of the app while maintaining an appropriate scale (i.e., separating key functionalities from nice-to-haves)
+
 Equal distribution of work, considering some queries/sections (bids vs. moderator actions vs. listings, for example) are more complex than others.
 
 ## Bonus Features, If Possible

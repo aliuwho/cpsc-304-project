@@ -20,49 +20,46 @@
     </head>
 
     <body>
+        <h1>
+            <center>
+            UBC GIVE
+</center>
+        </h1>
         <div class="column">
         <h2>Reset</h2>
-        <p>Click the reset button to delete the default tables.</p>
+        <p>Click the reset button to drop the tables. Proceed with caution!</p>
 
         <form method="POST" action="ubc-give.php">
-            <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
             <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
             <p><input type="submit" value="Reset" name="reset"></p>
         </form>
 
-        <!-- <hr /> -->     
-
-        <h2>Insert new Listing</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+        <h2>Insert Listing</h2>
+        <form method="POST" action="ubc-give.php">
             <input type="hidden" id="insertListingQueryRequest" name="insertListingQueryRequest">
-            Item: <input type="text" name="insItemL"> <br /><br />
+            Item: <input type="text" name="insItemL">
             
-            <input type="submit" value="InsertListing" name="insertListingSubmit"></p>
+            <input type="submit" value="Insert Listing" name="insertListingSubmit"></p>
         </form>
         
-        <!-- <hr /> -->  
-        <h2>Insert new Review</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+        <h2>Insert Review</h2>
+        <form method="POST" action="ubc-give.php">
             <input type="hidden" id="insertReviewQueryRequest" name="insertReviewQueryRequest">
-            Item: <input type="text" name="insReviewDescription"> <br /><br />
+            Item: <input type="text" name="insReviewDescription">
             
-            <input type="submit" value="InsertReview" name="insertReviewSubmit"></p>
+            <input type="submit" value="Insert Review" name="insertReviewSubmit"></p>
         </form>
-
-        <!-- <hr /> -->  
-        <h2>Insert new Request</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+ 
+        <h2>Insert Request</h2>
+        <form method="POST" action="ubc-give.php">
             <input type="hidden" id="insertRequestQueryRequest" name="insertRequestQueryRequest">
-            Description: <input type="text" name="insDescription"> <br /><br />
-        <input type="submit" value="InsertRequest" name="insertRequestSubmit"></p> 
+            Description: <input type="text" name="insDescription">
+        <input type="submit" value="Insert Request" name="insertRequestSubmit"></p> 
         </form>
-
-        <!-- <hr /> -->  
-
         
         <h2>Update Name in Account</h2>
        
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
+        <form method="POST" action="ubc-give.php"> 
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
             Old Name: <input type="text" name="oldName"> <br /><br />
             New Name: <input type="text" name="newName"> <br /><br />
@@ -70,31 +67,25 @@
             <input type="submit" value="Update" name="updateSubmit"></p>
         </form>
 
-        <!-- <hr /> -->  
-
-        <h2>Count the Tuples in Listing</h2>
-        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
+        <h2>Queries for Listings</h2>
+        <form method="GET" action="ubc-give.php"> 
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-            <input type="submit" name="countTuples"></p>
-        </form>
-        <!-- <hr /> -->  
+            <input type="submit" value="Count All" name="countTuples">
 
-        <h2>Display the Tuples in Listing</h2>
-        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
-            <input type="submit" name="displayTuples"></p>
+            <input type="submit" value="Display All" name="displayTuples"></p>
         </form>
-        
 
 
         <?php 
+        include "./krish-remaining-queries.html";
         include "./louise-queries.html";
         include "./amy-queries.html";
-        include "./krish-remaining-queries.html";
+        include "./krish-php.php";
         include "./louise-php.php";
         include "./amy-php.php";
-        include "./krish-php.php";
-        
+
+
         $success = True; //keep track of errors so it redirects the page only if there are no errors
         $db_conn = NULL; // edit the login credentials in connectToDB()
         $show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
@@ -248,7 +239,6 @@
         function handleInsertRequest() {
             global $db_conn;
 
-            //Getting the values from user and insert data into the table
             $tuple = array (
                 ":bind1" => $_POST['insNo'],
                 ":bind2" => $_POST['insName']
@@ -290,7 +280,6 @@
         function handleListingInsertRequest() {
             global $db_conn;
 
-            //Getting the values from user and insert data into the table
             $tuple = array (
                 ":bind1" => $_POST['streetname'],
                 ":bind2" => $_POST['streetno'],
@@ -414,7 +403,6 @@
              OCICommit($db_conn);
         }
 
-
         function handleCountRequest() {
             global $db_conn;
 
@@ -437,8 +425,6 @@
 
 
         // HANDLE ALL POST ROUTES
-	    // A better coding practice is to have one method that reroutes your requests accordingly. 
-        // It will make it easier to add/remove functionality.
         function handlePOSTRequest() {
             if (connectToDB()) {
                 if (array_key_exists('resetTablesRequest', $_POST)) {
@@ -455,9 +441,9 @@
                     handleInsertLocationRequest();
                 } else if (array_key_exists('insertListingQueryRequest', $_POST)) {
                     handleInsertListingRequest();
-                }else if (array_key_exists('insertRequestQueryRequest', $_POST)) {
+                } else if (array_key_exists('insertRequestQueryRequest', $_POST)) {
                     handleInsertRequestRequest();
-                }else if (array_key_exists('postCategoryRequest', $_POST)) {
+                } else if (array_key_exists('postCategoryRequest', $_POST)) {
                     handlePostToCat();
                 } else if (array_key_exists('insertReviewQueryRequest', $_POST)) {
                     handleReviewRequest();
@@ -477,10 +463,8 @@
             }
         }
         
-
         // HANDLE ALL GET ROUTES
-	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
-        function handleGETRequest() {
+	    function handleGETRequest() {
             if (connectToDB()) {
                 if (array_key_exists('countTuples', $_GET)) {
                     handleCountRequest();
@@ -488,7 +472,7 @@
                     handleDisplayRequest();
                 } else if (array_key_exists('countRequestF', $_GET)) {
                     handleCountFulfilledRequest();
-                }else if (array_key_exists('viewUsersRequest', $_GET)) {
+                } else if (array_key_exists('viewUsersRequest', $_GET)) {
                     handleViewUsersRequest();
                 }else if (array_key_exists('displayCategoryhaving', $_GET)) {
                     handleCategoryHaving();
@@ -496,16 +480,14 @@
                     handleViewLocationsRequest();
                 } else if (array_key_exists('viewEmptyCategoriesRequest', $_GET)) {
                     handleViewEmptyCategoriesRequest();
-                } else if (array_key_exists('viewRequestsByCategoryRequest', $_GET)) {
-                    handleViewRequestsByCategoryRequest();
+                } else if (array_key_exists('viewPostsByCategoryRequest', $_GET)) {
+                    handleViewPostsByCategoryRequest();
                 } else if (array_key_exists('viewCategoryCountRequest', $_GET)) {
                     handleViewCategoryCountRequest();
                 } else if (array_key_exists('viewPopularCategoriesRequest', $_GET)) {
                     handleViewPopularCategoriesRequest();
                 } else if (array_key_exists('listingInfoRequest', $_GET)) {
                     handleListingInfoRequest();
-                } else if (array_key_exists('everySeverityRequest', $_GET)) {
-                    handleEverySeverityRequest();
                 }
 
                 disconnectFromDB();
@@ -514,14 +496,11 @@
 
         function handleDELETERequest() {
             if (connectToDB()) {
-                echo "<br>IM HERE1<br>";
                 if (array_key_exists('deleteLocationRequest', $_POST)) {
                     handleDeleteLocationRequest();
                 } else if (array_key_exists('deleteAccountRequest', $_POST)) {
                     handleDeleteAccountRequest();
-                } 
-                 else if (array_key_exists('deleteListingRequest', $_POST)) {
-                    echo "<br>IM HERE1<br>";
+                } else if (array_key_exists('deleteListingRequest', $_POST)) {
                     handleDeleteListingRequest();
                 } 
 
@@ -543,17 +522,18 @@
         isset($_POST['postCategoryRequest']) ||
         isset($_POST['suspendAccountSubmit']) || isset($_POST['insertBroadcastSubmit']) ||
         isset($_POST['insertTicketSubmit']) || isset($_POST['resolveTicketSubmit'])) {
-            echo "Finished execution.";
             handlePOSTRequest();
+
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
         isset($_GET['displayCategoryhaving'])||
         isset($_GET['viewUsersRequest']) || isset($_GET['viewLocationsRequest'])
         || isset($_GET['countRequestF'])
-        || isset($_GET['viewEmptyCategoriesRequest']) ||  isset($_GET['viewRequestsByCategoryRequest'])
+        || isset($_GET['viewEmptyCategoriesRequest']) ||  isset($_GET['viewPostsByCategoryRequest'])
         ||  isset($_GET['viewCategoryCountRequest']) ||   isset($_GET['viewPopularCategoriesRequest'])
         ||  isset($_GET['listingInfoRequest']) || isset($_GET['listingInfoSubmit'])
         || isset($_GET['everySeverityRequest'])) {
             handleGETRequest();
+
         } else if (isset($_POST['deleteLocationSubmit']) || isset($_POST['deleteAccountSubmit']) || isset($_POST['deleteListingSubmit'])) {
             handleDELETERequest();
         }
