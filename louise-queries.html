@@ -12,8 +12,6 @@
 <form method="GET" action="ubc-give.php">
     <input type="hidden" id="viewLocationsRequest" name="viewLocationsRequest">
     <input type="submit" value="View Locations" name="viewLocationsSubmit"></p>
-<!--     <?php echo $locations;
-    echo $test; ?> -->
 </form>
 
 <h2>Delete a Location</h2>
@@ -25,18 +23,52 @@
 </form>
 
 
-<h2>Get Empty Categories</h2>
-<form method="GET" action="ubc-give.php">
-    <input type="hidden" id="viewEmptyCategoriesRequest" name="viewEmptyCategoriesRequest">
-    <input type="submit" value="View Empty Categories" name="viewEmptyCategoriesSubmit"></p>
-</form>
-
-<h2>View Requests By Category</h2>
+<h2>View Posts By Category</h2>
 <form method="GET" action="ubc-give.php">
     <input type="hidden" id="viewRequestsByCategoryRequest" name="viewRequestsByCategoryRequest">
     <label>Category Name:</label>
     <?php
-        populateDropDown();
-    ?>
-    <input type="submit" value="View Requests" name="viewRequestsByCategorySubmit"></p>
+        categoryDropDown();
+    ?> </form>
+    <input type="submit" value="View Posts" name="viewRequestsByCategorySubmit"></p>
+</form>
+
+<h2>Other Category Functions</h2>
+<form method="GET" action="ubc-give.php">
+    <input type="hidden" id="viewEmptyCategoriesRequest" name="viewEmptyCategoriesRequest">
+    <input type="submit" value="View Empty Categories" name="viewEmptyCategoriesSubmit" ></p>
+</form>
+<form method="GET" action="ubc-give.php">
+    <input type="hidden" id="viewCategoryCountRequest" name="viewCategoryCountRequest">
+    <input type="submit" value="View Counts per Category" name="viewCategoryCountSubmit" ></p>
+</form>
+<form method="GET" action="ubc-give.php">
+    <input type="hidden" id="viewPopularCategoriesRequest" name="viewPopularCategoriesRequest">
+    <input type="submit" value="View Most Popular Categories" name="viewPopularCategoriesSubmit" ></p>
+</form>
+
+<h2>View Listing Information</h2>
+<form method="GET" action="ubc-give.php">
+    <label>Item:</label>
+    <?php
+        itemDropDown();
+    ?></p>
+
+    <input type="checkbox" id="Poster Name" name="attributes[]" value="A.NAME">
+    <label for="Poster Name">Poster Name</label>
+    
+    <input type="checkbox" id="Poster Email" name="attributes[]" value="A.EMAIL">
+    <label for="Poster Email">Poster Email</label>
+
+    <input type="checkbox" id="Created On" name="attributes[]" value="P.CREATED_ON">
+    <label for="Created On">Date Created</label>
+
+    <input type="checkbox" id="Expiration" name="attributes[]" value="P.EXPIRATION">
+    <label for="Expiration">Expiration Date</label>
+
+    <input type="checkbox" id="Status" name="attributes[]" value="P.POST_STATUS">
+    <label for="Status">Status</label>
+
+    <input type="hidden" id="listingInfoRequest" name="listingInfoRequest">
+    <input type="submit" value="View Listing Info" name="viewListingInfoSubmit"></p>
 </form>
