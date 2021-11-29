@@ -505,3 +505,69 @@ INSERT INTO Suggests
 VALUES(8, 1, TIMESTAMP '2021-10-30 15:00:00');
 INSERT INTO Suggests
 VALUES(9, 5, TIMESTAMP '2021-10-30 15:00:00');
+
+INSERT INTO Post(
+        post_id,
+        post_type,
+        account_id,
+        expiration,
+        post_status
+    )
+VALUES(
+        100,
+        'Listing',
+        1,
+        TIMESTAMP '2023-10-11 13:00:00',
+        'Pending'
+    );
+    INSERT INTO Post(
+        post_id,
+        post_type,
+        account_id,
+        expiration,
+        post_status
+    )
+VALUES(
+        101,
+        'Listing',
+        0,
+        TIMESTAMP '2023-12-04 13:00:00',
+        'Pending'
+    );
+    INSERT INTO Post(
+        post_id,
+        post_type,
+        account_id,
+        expiration,
+        post_status
+    )
+VALUES(
+        102,
+        'Listing',
+        8,
+        TIMESTAMP '2023-08-04 13:00:00',
+        'Pending'
+    );
+    INSERT INTO Post(
+        post_id,
+        post_type,
+        account_id,
+        expiration,
+        post_status
+    )
+VALUES(
+        103,
+        'Listing',
+        6,
+        TIMESTAMP '2023-01-04 13:00:00',
+        'Pending'
+    );
+
+INSERT INTO Listing
+VALUES(100, 'Apple charging cord');
+INSERT INTO Listing
+VALUES(101, 'Dress from Oak and Fort');
+INSERT INTO Listing
+VALUES(102, 'Leggings');
+INSERT INTO Listing
+VALUES(103, 'USB 100gb');
