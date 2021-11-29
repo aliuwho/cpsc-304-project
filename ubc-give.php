@@ -91,8 +91,8 @@
         include "./krish-remaining-queries.html";
         include "./louise-queries.html";
         include "./amy-queries.html";
-        include "./krish-php.php";
-        include "./louise-php.php";
+        // include "./krish-php.php";
+        // include "./louise-php.php";
         include "./amy-php.php";
         
         $success = True; //keep track of errors so it redirects the page only if there are no errors
@@ -183,7 +183,7 @@
 
             // Your username is ora_(CWL_ID) and the password is a(student number). For example, 
 			// ora_platypus is the username and a12345678 is the password.
-            $db_conn = OCILogon("ora_aimyul", "a12757563", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_kthukral", "a69843365", "dbhost.students.cs.ubc.ca:1522/stu");
 
             if ($db_conn) {
                 debugAlertMessage("Database is Connected");
@@ -217,7 +217,7 @@
         function handleResetRequest() {
             global $db_conn;
             // Delete tables
-            echo "<br> Creating new tables <br>";
+            echo "<br> Deleting tables <br>";
             executePlainSQL("DROP TABLE Suggests");
             executePlainSQL("DROP TABLE Pickup");
             executePlainSQL("DROP TABLE LocationAddress");
@@ -294,110 +294,6 @@
         }
 
            
-        function handleInsertListingRequest() {
-            global $db_conn;
-            echo "<br>IM HERE<br>";
-            //$postID= microtime() + floor(rand()*10000);
-             $id = hexdec( uniqid() );
-            $today = date("j, n, Y");
-            echo "<br>IM HERE<br>"; 
-            $postID = $id;
-            $postStatus = "Open";
-
-
-            //$today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
-            // echo "<br>IM HERE<br>";
-            // $timestamp = date('Y-m-d H:i:s');
-            // $exp = date("j, n, Y+1");
-                
-            //     $postType="Listing";
-            
-            //     $account = 34;
-            //     $createdon = $today;
-            //     $updatedOn =$today;
-            //     $expire = $today;
-            //     $pid = 9;
-            //     $listing = $_POST['insItemL']; 
-            //   executePlainSQL("insert into Post values ('$postID','$postType','$account',
-            //  CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'$postStatus')");
-            // executePlainSQL("insert into Listing values ('$postID','$listing')"); 
-
-           // echo "<br>IMHERREEE<br>";
-           // OCICommit($db_conn);
-           echo "<br>IM HEREEE<br>";
-           
-            //$today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
-            // $updatedOn =$today1;
-            // $expire = $today1;
-            echo "<br>IM HERE1<br>";
-            
-            
-            
-           $createdon = '26/02/2010';
-            echo "<br>IM HERE3<br>";
-            $tuplePost = array (
-                ":bind0" => $postID,
-                ":bind1" => "Listing",
-                ":bind2" => 0,
-                ":bind3" => $createdon,
-                ":bind4" => $createdon,
-                ":bind5" => $createdon,
-                ":bind6" => $postStatus
-            );
-            $allPosttuples = array (
-                $tuplePost
-            ); 
-            //Listing tuples 
-             $tuple = array (
-                ":bind0" => $postID,
-                ":bind1" => $_POST['insItemL']
-            );
-            $alltuples = array (
-                $tuple
-            ); 
-            echo "<br>IM HER2E<br>";
-           executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind6)", $allPosttuples);
-           OCICommit($db_conn);
-           echo "<br>IM HERE1<br>";
-           executeBoundSQL("insert into Listing(post_id,item) values (:bind0,:bind1)", $alltuples);
-           echo "<br>IM HERE<br>";
-            OCICommit($db_conn);
-        }
-
-
-        
-        function handleInsertReviewRequest() {
-            global $db_conn;
-            //$postID= microtime() + floor(rand()*10000);
-            $id = hexdec( uniqid() );
-            $fulfilledid = hexdec( uniqid() );
-            
-            $today = date('26/02/2010');
-            $postStatus = "Open";
-            //$today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
-            echo "<br>IM HERE1<br>";
-            $receiver_id=0;
-            $poster_id=0;
-            //Listing tuples 
-             $tuple = array (
-                ":bind0" => $id,
-                ":bind1" => $receiver_id,
-                ":bind2" => $poster_id,
-                ":bind3" => $_POST['insReviewDescription'],
-                ":bind3" => $today,
-                ":bind4" => 0,
-
-                
-            );
-            $alltuples = array (
-                $tuple
-            ); 
-            
-            echo "<br>IM HERE1<br>";
-            executeBoundSQL("insert into Review values(:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind4)", $alltuples);
-            echo "<br>IM HERE<br>";
-             OCICommit($db_conn);
-        }
 
 
         function handleCountRequest() {
@@ -490,7 +386,6 @@
 
         function handleDELETERequest() {
             if (connectToDB()) {
-                echo "<br>IM HERE1<br>";
                 if (array_key_exists('deleteLocationRequest', $_POST)) {
                     handleDeleteLocationRequest();
                 } else if (array_key_exists('deleteAccountRequest', $_POST)) {
