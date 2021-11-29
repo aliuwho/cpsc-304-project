@@ -369,6 +369,7 @@
             //$postID= microtime() + floor(rand()*10000);
              $id = hexdec( uniqid() );
             $today = date("j, n, Y");
+            $today2=date("Y-m-d H:i:s");
             echo "<br>IM HERE<br>"; 
             $postID = $id;
             $postStatus = "Open";
@@ -402,7 +403,7 @@
             
             
             
-           $createdon = '26/02/2010';
+           //$createdon = $today2;
             echo "<br>IM HERE3<br>";
             $tuplePost = array (
                 ":bind0" => $postID,
@@ -425,7 +426,9 @@
                 $tuple
             ); 
             echo "<br>IM HER2E<br>";
-           executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind6)", $allPosttuples);
+            executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind6)", $allPosttuples);
+        //    executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,
+        //    updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,:bind3,:bind3,:bind3,:bind6)", $allPosttuples);
            OCICommit($db_conn);
            echo "<br>IM HERE1<br>";
            executeBoundSQL("insert into Listing(post_id,item) values (:bind0,:bind1)", $alltuples);
@@ -540,6 +543,7 @@
             executeBoundSQL("insert into suspends(aid, mid) value(:bind1, :bind2)", $alltuples);
             OCICommit($db_conn);
         }
+        
 
         function handleDeleteAccountRequest() {
             global $db_conn;
@@ -687,7 +691,9 @@
                     handleCountFulfilledRequest();
                 }else if (array_key_exists('viewUsersRequest', $_GET)) {
                     handleViewUsersRequest();
-                } else if (array_key_exists('viewLocationsRequest', $_GET)) {
+                }else if (array_key_exists('displayCategoryhaving', $_GET)) {
+                    handleCategoryHaving();
+                }else if (array_key_exists('viewLocationsRequest', $_GET)) {
                     handleViewLocationsRequest();
                 } else if (array_key_exists('viewEmptyCategoriesRequest', $_GET)) {
                     handleViewEmptyCategoriesRequest();
@@ -734,6 +740,7 @@
             echo "Finished execution.";
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) ||
+        isset($_GET['displayCategoryhaving'])||
         isset($_GET['viewUsersRequest']) || isset($_GET['viewLocationsRequest'])
         || isset($_GET['countRequestF'])
         || isset($_GET['viewEmptyCategoriesRequest']) ||  isset($_GET['viewRequestsByCategoryRequest'])) {
