@@ -8,6 +8,8 @@ function handleInsertRequestRequest() {
     $today = date('26/02/2010');
     $postStatus = "Open";
     //$today1 = TO_DATE('26/02/2010', 'DD/MM/YYYY');
+    echo "<br>IM HERE1<br>";
+    echo "<br>IM HERE3<br>";
     $tuplePost = array (
         ":bind0" => $postID,
         ":bind1" => "Listing",
@@ -33,12 +35,9 @@ function handleInsertRequestRequest() {
     $alltuples = array (
         $tuple
     ); 
-    echo "<br>IM HER2E<br>";
     executeBoundSQL("insert into Post(post_id,post_type,account_id,created_on,updated_on,expiration,post_status) values (:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind6)", $allPosttuples);
     OCICommit($db_conn);
-    echo "<br>IM HERE1<br>";
     executeBoundSQL("insert into Request values(:bind0,:bind1,:bind2,TO_DATE('26/02/2010', 'DD/MM/YYYY'),:bind4)", $alltuples);
-    echo "<br>IM HERE<br>";
      OCICommit($db_conn);
 
     // $timestamp = date('Y-m-d H:i:s');
@@ -60,8 +59,6 @@ function handleInsertRequestRequest() {
 }
 function handleDeleteListingRequest() {
     global $db_conn;
-    echo "<br>IM HER2E<br>";
-            // Getting the values from user and insert data into the table
             $tuple = array (
                 ":bind1" => $_POST['PostID']
             );
@@ -69,10 +66,8 @@ function handleDeleteListingRequest() {
             $alltuples = array (
                 $tuple
             );
-            echo "<br>IM HER2E<br>";
 
             executeBoundSQL("delete from listing where post_id=:bind1", $alltuples);
-            echo "<br>IM HER3E<br>";
             OCICommit($db_conn);
         }
 function handleFulfillRequest() {
@@ -94,7 +89,6 @@ function handleFulfillRequest() {
     executeBoundSQL("update request set fulfilled_on=TO_DATE('26/02/2010', 'DD/MM/YYYY') where post_id=:bind1", $alltuples); 
         }
 function handleUpdateListing() {
-    echo "<br>IM HERzE<br>";
     global $db_conn;
     $tuple = array (
         ":bind1" => $_POST['PostIDU'],
@@ -120,19 +114,18 @@ function handleCountFulfilledRequest() {
     echo "<br> The number of tuples fulfilled in Request: " . $row[0] . "<br>";
     }
 }
+
 function handleCategoryHaving() {
     global $db_conn;
-    echo "<br>IM HER2E<br>";
-    $result = executePlainSQL("SELECT Count(category) FROM belongsto b GROUP BY category having count(*)> 2 ");//WHERE fulfilled=1
-
+    $result = executePlainSQL("SELECT Category, Count(*) as COUNT FROM belongsto b GROUP BY category having count(*)>= 2 ");
+    $heading = "The number of categories with 2+ posts:";
     if (($row = oci_fetch_row($result)) != false) {
-    echo "<br> The number of tuples fulfilled in Request: " . $row[0] . "<br>";
+        printCategoryCount($result, $heading); 
     }
 }
 
 
 function handlePostToCat(){
-    echo "<br>IM HERzE<br>";
     global $db_conn;
     $tuple = array (
         ":bind1" => $_POST['CategoryP'],
