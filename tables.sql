@@ -45,6 +45,7 @@ CREATE TABLE Ticket (
 create table Flag (
         f_id Integer,
         f_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        f_severity Integer DEFAULT 1,
         f_description VARCHAR(200),
         aid INTEGER NOT NULL,
         mid INTEGER NOT NULL,

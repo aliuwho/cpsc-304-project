@@ -106,16 +106,16 @@ INSERT INTO Ticket(tid, aid, t_subject, t_category, t_priority)
 VALUES (6, 0, 'ate a bagel', 'false information', 0);
 INSERT INTO Ticket(tid, aid, t_subject, t_category, t_priority)
 VALUES (7, 4, 'horrible ui', 'bad item quality', 1);
-INSERT INTO Flag(f_id, f_description, aid, mid)
-VALUES (3, 'bad behavior', 0, 1);
-INSERT INTO Flag(f_id, f_description, aid, mid)
-VALUES (4, 'selling drugs', 4, 2);
-INSERT INTO Flag(f_id, f_description, aid, mid)
-VALUES (6, 'against community guidelines', 4, 5);
+INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
+VALUES (3, 'bad behavior', 0, 1, 2);
+INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
+VALUES (4, 'selling drugs', 4, 2, 3);
+INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
+VALUES (6, 'against community guidelines', 4, 5, 2);
 INSERT INTO Flag(f_id, f_description, aid, mid)
 VALUES (7, 'unusual post', 5, 2);
-INSERT INTO Flag(f_id, f_description, aid, mid)
-VALUES (8, 'hate speech', 4, 1);
+INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
+VALUES (8, 'hate speech', 4, 1, 2);
 INSERT INTO Broadcast
 VALUES(
         1,
