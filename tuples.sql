@@ -505,7 +505,6 @@ INSERT INTO Suggests
 VALUES(8, 1, TIMESTAMP '2021-10-30 15:00:00');
 INSERT INTO Suggests
 VALUES(9, 5, TIMESTAMP '2021-10-30 15:00:00');
-
 INSERT INTO Post(
         post_id,
         post_type,
@@ -520,7 +519,7 @@ VALUES(
         TIMESTAMP '2023-10-11 13:00:00',
         'Pending'
     );
-    INSERT INTO Post(
+INSERT INTO Post(
         post_id,
         post_type,
         account_id,
@@ -534,7 +533,7 @@ VALUES(
         TIMESTAMP '2023-12-04 13:00:00',
         'Pending'
     );
-    INSERT INTO Post(
+INSERT INTO Post(
         post_id,
         post_type,
         account_id,
@@ -548,7 +547,7 @@ VALUES(
         TIMESTAMP '2023-08-04 13:00:00',
         'Pending'
     );
-    INSERT INTO Post(
+INSERT INTO Post(
         post_id,
         post_type,
         account_id,
@@ -562,7 +561,6 @@ VALUES(
         TIMESTAMP '2023-01-04 13:00:00',
         'Pending'
     );
-
 INSERT INTO Listing
 VALUES(100, 'Apple charging cord');
 INSERT INTO Listing
@@ -571,10 +569,17 @@ INSERT INTO Listing
 VALUES(102, 'Leggings');
 INSERT INTO Listing
 VALUES(103, 'USB 100gb');
-
 INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
 VALUES (100, 'bad behavior', 0, 1, 1);
 INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
 VALUES (102, 'selling drugs', 0, 1, 3);
 INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
 VALUES (101, 'against community guidelines', 0, 5, 2);
+INSERT INTO BelongsTo
+VALUES(100, 'Electronics');
+INSERT INTO BelongsTo
+VALUES(103, 'Electronics');
+INSERT INTO BelongsTo
+VALUES(101, 'Clothing');
+INSERT INTO BelongsTo
+VALUES(102, 'Clothing');

@@ -485,6 +485,8 @@
                     handleViewPopularCategoriesRequest();
                 } else if (array_key_exists('listingInfoRequest', $_GET)) {
                     handleListingInfoRequest();
+                } else if (array_key_exists('everySeverityRequest', $_GET)) {
+                    handleEverySeverityRequest();
                 }
 
                 disconnectFromDB();
