@@ -4,10 +4,11 @@ All id attributes must be unique within the table.
 
 
 Account (__id__: integer, name: string, password: string, email: string, status: integer)
-- Candidate keys: (id), (name)
+- Candidate keys: (id)
 - Constraints: 
   - All attributes except for Status must be non-null. 
-  - Status is 0 when an account is suspended and 1 when an account is not suspended Additional status values may be applied.
+  - Status is 0 when an account is suspended and 1 when an account is not suspended
+  - Additional status values may be applied.
 
 Moderator (**__id__**: integer)
 - Candidate keys: (id)

@@ -83,13 +83,14 @@ function handleFulfillRequest() {
     $tuple = array (
         ":bind1" => $_POST['PostIDR'],
         ":bind2" => 1,
-        //":bind3" => 1
+        //":bind3" =>date("Y-m-d H:i:s")
     );
 
     $alltuples = array (
         $tuple
     );
-
+    //echo  date("Y-m-d H:i:s");
+    
     executeBoundSQL("update request set fulfilled=:bind2 where post_id=:bind1", $alltuples);
     OCICommit($db_conn);
     executeBoundSQL("update request set fulfilled_on=TO_DATE('26/02/2010', 'DD/MM/YYYY') where post_id=:bind1", $alltuples); 
@@ -116,6 +117,15 @@ function handleCountFulfilledRequest() {
     global $db_conn;
 
     $result = executePlainSQL("SELECT Count(*) FROM Request WHERE fulfilled=1");
+
+    if (($row = oci_fetch_row($result)) != false) {
+    echo "<br> The number of tuples fulfilled in Request: " . $row[0] . "<br>";
+    }
+}
+function handleCategoryHaving() {
+    global $db_conn;
+    echo "<br>IM HER2E<br>";
+    $result = executePlainSQL("SELECT Count(category) FROM belongsto b GROUP BY category having count(*)> 2 ");//WHERE fulfilled=1
 
     if (($row = oci_fetch_row($result)) != false) {
     echo "<br> The number of tuples fulfilled in Request: " . $row[0] . "<br>";

@@ -6,7 +6,6 @@
 
     <input type="submit" value="Delete Listing" name="deleteListingSubmit"></p>
 </form>
-<!-- <hr /> -->  
 
 <h2>Update a Listing</h2>
 <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
@@ -14,7 +13,7 @@
     Post ID: <input type="text" name="PostIDU"> <br /><br />
     New Item name: <input type="text" name="NewItem"> <br /><br />
 
-    <input type="submit" value="Update Listing" name="UpdateListingSubmit"></p>
+    <input type="submit" value="Update Listing" name="updateListingSubmit"></p>
 </form>
 
 <!-- <hr /> -->  
@@ -35,8 +34,18 @@
             <input type="submit" name="countRequestF"></p>
         </form> 
 
-    </div>
-<div class="column">
+<h2>Display the Posts of Certain Category</h2>
+        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="displayCategory" name="displayCategory">
+            <input type="submit" name="displayPC"></p>
+        </form>
+
+<h2>Select Category from Belongs that has >2</h2>
+        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="displayCategoryhaving" name="displayCategoryhaving">
+            <input type="submit" name="displayCategoryhaving"></p>
+        </form>
+
 <h2>Put post in Category</h2>
 <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
     <input type="hidden" id="postCategoryRequest" name="postCategoryRequest">
@@ -46,4 +55,6 @@
 
     <input type="submit" value="Select Category" name="Select Category"></p>
 </form>
-<!-- <hr /> -->  
+
+</div>
+<div class="column">
