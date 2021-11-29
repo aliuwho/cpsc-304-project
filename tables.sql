@@ -34,8 +34,8 @@ CREATE TABLE Ticket (
         tid INTEGER,
         aid INTEGER NOT NULL,
         mid INTEGER,
-        t_subject VARCHAR(50),
-        t_category VARCHAR(30),
+        t_subject VARCHAR(50) NOT NULL,
+        t_category VARCHAR(30) NOT NULL,
         t_priority INTEGER DEFAULT 0,
         created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(tid),
@@ -45,6 +45,7 @@ CREATE TABLE Ticket (
 create table Flag (
         f_id Integer,
         f_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        f_severity Integer DEFAULT 1,
         f_description VARCHAR(200),
         aid INTEGER NOT NULL,
         mid INTEGER NOT NULL,

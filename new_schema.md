@@ -3,24 +3,25 @@ Primary keys are __underlined__ and foreign keys are in **bold**.
 All id attributes must be unique within the table.
 
 
-Account (__id__: integer, name: string, password: string, email: string, status: integer)
+Account (__id__: integer, name: string, password: string, email: string, status: integer, suspend_mid: integer)
 - Candidate keys: (id), (name)
+- suspend_mid references Moderator (id)
 - Constraints: 
   - Name must be unique
-  - All attributes except for Status must be non-null. 
+  - All attributes except for Status and suspend_mid must be non-null. By default, Status and suspend_mid will be set to 1 and 0, respectively.
   - Status is 0 when an account is suspended and 1 when an account is not suspended Additional status values may be applied.
 
 Moderator (**__id__**: integer, welcome_message: string, promotion_date: timestamp)
 - Candidate keys: (id)
 - id references Account (id)
 - Constraints:
-  - All attributes must not be null
+  - id must not be null
 
 Bid (__id__: integer, message: string, lid: integer, aid: integer, chosen: integer)
 - Candidate keys: (id)
 - Constraints:
   - chosen is 0 or 1, representing if a bid is selected (0 = not selected)
-  - All attributes must not be null
+  - All attributes except for chosen must not be null
 
 Ticket (__ID__: integer, **MID**: integer, **AID**: integer, Subject: string, Priority: integer, Category: string, created_on: timestamp)
 - Candidate keys: (ID)
@@ -31,11 +32,12 @@ Ticket (__ID__: integer, **MID**: integer, **AID**: integer, Subject: string, Pr
   - Priority is assigned based on Category
   - All attributes must not be null
 
-Flag (__ID__: integer, **MID**: integer, **AID**: integer, date: timestamp, description: string)
+Flag (__ID__: integer, **MID**: integer, **AID**: integer, date: timestamp, severity: integer, description: string)
 - Candidate keys: (ID)
 - mid references Moderator (id)
 - aid references Account (id)
 - Constraints:
+  - Severity is one of 1, 2, 3 and represents the significance of why a user is flagged. Higher severity indicates greater misdemeanor.
   - All attributes must be non null
 
 Broadcast (__ID__: integer, Time: timestamp, Message: string)
