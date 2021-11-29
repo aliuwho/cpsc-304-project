@@ -1,5 +1,14 @@
 
 <?php
+
+function handleEverySeverityRequest()
+{
+    global $db_conn;
+    executePlainSQL("SELECT a.id FROM account a WHERE not exists
+    ( (select f1.f_severity from flag f1) MINUS
+      (select f2.f_severity from flag f2 where f2.aid = a.id) )");
+}
+
 function handleResolveTicketRequest()
 {
     global $db_conn;
