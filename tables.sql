@@ -129,8 +129,8 @@ CREATE TABLE LocationAddress (
 CREATE TABLE Pickup (
         pickupid INTEGER,
         description VARCHAR(100) NOT NULL,
-        streetname NOT NULL,
-        streetno NOT NULL,
+        streetname VARCHAR(30) NOT NULL,
+        streetno INTEGER NOT NULL,
         PRIMARY KEY(pickupid),
         FOREIGN KEY(streetname, streetno) REFERENCES LocationAddress ON DELETE CASCADE
 );
