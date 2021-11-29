@@ -571,3 +571,10 @@ INSERT INTO Listing
 VALUES(102, 'Leggings');
 INSERT INTO Listing
 VALUES(103, 'USB 100gb');
+
+INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
+VALUES (100, 'bad behavior', 0, 1, 1);
+INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
+VALUES (102, 'selling drugs', 0, 1, 3);
+INSERT INTO Flag(f_id, f_description, aid, mid, f_severity)
+VALUES (101, 'against community guidelines', 0, 5, 2);

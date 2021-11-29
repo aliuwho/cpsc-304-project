@@ -8,7 +8,7 @@ function printEverySeverity($result)
     echo "<tr><th>Name</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row["NAME"];
+        echo "<tr><td>" . $row["NAME"] . "</td></tr>";
     }
 
     echo "</table>";
@@ -17,7 +17,7 @@ function printEverySeverity($result)
 function handleEverySeverityRequest()
 {
     global $db_conn;
-    executePlainSQL("SELECT a.name FROM account a WHERE not exists
+    $result = executePlainSQL("SELECT a.name FROM account a WHERE not exists
     ( (select f1.f_severity from flag f1) MINUS
       (select f2.f_severity from flag f2 where f2.aid = a.id) )");
 
@@ -89,7 +89,7 @@ function printUsers($result)
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
         // echo "<tr><td>" . $row["name"] . "</td><td>" . $row["email"] . "</td></tr>"; //or just use "echo $row[0]"
-        echo "<tr><td>" . $row["NAME"] . "</td><td>" . $row["EMAIL"];
+        echo "<tr><td>" . $row["NAME"] . "</td><td>" . $row["EMAIL"] . "</td></tr>";
     }
 
     echo "</table>";
