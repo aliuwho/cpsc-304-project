@@ -13,7 +13,7 @@
   Apache server can run it, and you must rename it to have a ".php"
   extension.  You must also change the username and password on the 
   OCILogon below to be your ORACLE username and password -->
-<html>
+  <html>
     <head>
         <link rel="stylesheet" href="index.css">
         <title>UBC GIVE</title>
@@ -22,7 +22,7 @@
     <body>
         <div class="column">
         <h2>Reset</h2>
-        <p>Click the reset button to reload default tables.</p>
+        <p>Click the reset button to delete the default tables.</p>
 
         <form method="POST" action="ubc-give.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
@@ -59,79 +59,8 @@
 
         <!-- <hr /> -->  
 
-        <h2>Create a new user account</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertAccountRequest" name="insertAccountRequest">
-            Name: <input type="text" name="insertAccountName"> <br /><br />
-            Password: <input type="text" name="insertAccountPassword"> <br /><br />
-            Email: <input type="text" name="insertAccountEmail"> <br /><br />
-            <input type="submit" value="Create New Account" name="insertAccountSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>Delete a user</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="deleteAccountRequest" name="deleteAccountRequest">
-            Account ID: <input type="text" name="deleteAccountID"> <br /><br />
-            <input type="submit" value="Delete Account" name="deleteAccountSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>Suspend a user</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="suspendAccountRequest" name="suspendAccountRequest">
-            User ID (Suspendee): <input type="text" name="suspendAccountAID"> <br /><br />
-            Moderator ID (Suspender): <input type="text" name="suspendAccountMID"> <br /><br />
-            <input type="submit" value="Suspend User" name="suspendAccountSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>View other users</h2>
-        <form method="GET" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="viewUsersRequest" name="viewUsersRequest">
-            Your account ID: <input type="text" name="viewUserID"> <br /><br />
-            <input type="submit" value="View Other Users" name="viewUsersSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-        <h2>Create a broadcast</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertBroadcastRequest" name="insertBroadcastRequest">
-            Broadcast message: <input type="text" name="insertBroadcastMessage"> <br /><br />
-            <input type="submit" value="Create New Broadcast" name="insertBroadcastSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-        </div>
-        <div class="column">
-
-
-        <h2>Write a ticket</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertTicketRequest" name="insertTicketRequest">
-            Your account ID: <input type="text" name="insertTicketAID"> <br /><br />
-            Brief description: <input type="text" name="insertTicketSubject"> <br /><br />
-            Category: <input type="text" name="insertTicketCategory"> <br /><br />
-            Priority (an integer where higher numbers indicate higher priority):<br /><input type="text" name="insertTicketPriority"> <br /><br />
-            <input type="submit" value="Create a New Ticket" name="insertTicketSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>Resolve a ticket</h2>
-        <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="resolveTicketRequest" name="resolveTicketRequest">
-            Account ID for the ticket: <input type="text" name="resolveTicketTID"> <br /><br />
-            Moderator ID: <input type="text" name="resolveTicketMID"> <br /><br />
-            <input type="submit" value="Resolve Ticket" name="resolveTicketSubmit"></p>
-        </form>
-
-        <!-- <hr /> -->  
-
-        <h2>Update Account Name</h2>
+        
+        <h2>Update Name in Account</h2>
        
         <form method="POST" action="ubc-give.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
@@ -161,8 +90,10 @@
         <?php 
         include "./krish-remaining-queries.html";
         include "./louise-queries.html";
+        include "./amy-queries.html";
         include "./krish-php.php";
         include "./louise-php.php";
+        include "./amy-php.php";
         
         $success = True; //keep track of errors so it redirects the page only if there are no errors
         $db_conn = NULL; // edit the login credentials in connectToDB()
@@ -305,11 +236,11 @@
             executePlainSQL("DROP TABLE Account");
             
 
-            // Add tuples
-            echo "<br> Filling tables <br>";
-            // executePlainSQL("start tuples.sql");
-            // TODO ADD STATEMENTS FOR INSERTING TUPLES
-            executePlainSQL("@tuples.sql");
+            // // Add tuples
+            // echo "<br> Filling tables <br>";
+            // // executePlainSQL("start tuples.sql");
+            // // TODO ADD STATEMENTS FOR INSERTING TUPLES
+            // executePlainSQL("@tuples.sql");
             OCICommit($db_conn);
         }
 
@@ -445,149 +376,6 @@
             OCICommit($db_conn);
         }
 
-        function handleResolveTicketRequest() {
-            global $db_conn;
-
-            // Getting the values from user and insert data into the table
-            $tuple = array (
-                ":bind1" => $_POST['resolveTicketTID'],
-                ":bind2" => $_POST['resolveTicketMID']
-            );
-
-            $alltuples = array (
-                $tuple
-            );
-
-            executeBoundSQL("update ticket set mid=:bind2 where tid=:bind1", $alltuples);
-            OCICommit($db_conn);
-        }
-
-        function generateNewID() {
-            // generate new id
-            // sourced from https://stackoverflow.com/questions/13932259/unique-id-consisting-of-only-numbers
-            // for demonstration purposes, this will suffice for generating unique entries
-            $newId = microtime() + floor(rand()*10000);
-            return $newId;
-        }
-
-        function handleInsertTicketRequest() {
-            global $db_conn;
-
-            // Getting the values from user and insert data into the table
-            $tuple = array (
-                ":bind0" => generateNewID(),
-                ":bind1" => $_POST['insertTicketAID'],
-                ":bind2" => $_POST['insertTicketSubject'],
-                ":bind3" => $_POST['insertTicketCategory'],
-                ":bind4" => $_POST['insertTicketPriority']
-            );
-
-            $alltuples = array (
-                $tuple
-            );
-
-            $result = executeBoundSQL("insert into ticket(tid, aid, t_subject, t_category, t_priority) values(:bind0, :bind1, :bind2, :bind3, :bind4) ", $alltuples);
-            OCICommit($db_conn);
-        }
-
-        function handleInsertBroadcastRequest() {
-            global $db_conn;
-
-            // Getting the values from user and insert data into the table
-            $tuple = array (
-                ":bind0" => generateNewID(),
-                ":bind1" => $_POST['insertBroadcastMessage']
-            );
-
-            $alltuples = array (
-                $tuple
-            );
-
-            $result = executeBoundSQL("insert into broadcast(b_id, b_message) values (:bind0, :bind1)", $alltuples);
-            OCICommit($db_conn);
-        }
-
-        function printUsers($result) { //prints users
-            echo "<br>Other users:<br>";
-            echo "<table>";
-            echo "<tr><th>Name</th><th>Email</th></tr>";
-
-            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                // echo "<tr><td>" . $row["name"] . "</td><td>" . $row["email"] . "</td></tr>"; //or just use "echo $row[0]" 
-                echo "<tr><td>" . $row["NAME"] . "</td><td>" . $row["EMAIL"];
-            }
-
-            echo "</table>";
-        }
-
-        function handleViewUsersRequest() {
-            // Getting the values from user and insert data into the table
-            $tuple = array (
-                ":bind1" => $_GET['viewUserID']
-            );
-
-            $alltuples = array (
-                $tuple
-            );
-
-            $result = executePlainSQL("select * from account where id <> " . $_GET['viewUserID']);
-            echo "<br>" . printUsers($result) . "<br>";
-
-        }
-
-        function handleSuspendAccountRequest() {
-            global $db_conn;
-            
-            // Getting the values from user and insert data into the table
-            $tuple = array (
-                ":bind1" => $_POST['deleteAccountAID'],
-                ":bind2" => $_POST['deleteAccountMID']
-            );
-
-            $alltuples = array (
-                $tuple
-            );
-
-
-            executeBoundSQL("insert into suspends(aid, mid) value(:bind1, :bind2)", $alltuples);
-            OCICommit($db_conn);
-        }
-
-        function handleDeleteAccountRequest() {
-            global $db_conn;
-            
-            // Getting the values from user and insert data into the table
-            $tuple = array (
-                ":bind1" => $_POST['deleteAccountID']
-            );
-
-            $alltuples = array (
-                $tuple
-            );
-
-
-            executeBoundSQL("delete from account where id=:bind1", $alltuples);
-            OCICommit($db_conn);
-        }
-
-        function handleInsertAccountRequest() {
-            global $db_conn;
-
-            // Getting the values from user and insert data into the table
-            $tuple = array (
-                ":bind0" => generateNewID(),
-                ":bind1" => $_POST['insertAccountName'],
-                ":bind2" => $_POST['insertAccountPassword'],
-                ":bind3" => $_POST['insertAccountEmail']
-            );
-
-            $alltuples = array (
-                $tuple
-            );
-
-            executeBoundSQL("insert into account(id, name, password, email) values (:bind0, :bind1, :bind2, :bind3)", $alltuples);
-            OCICommit($db_conn);
-        }
 
         
         function handleInsertReviewRequest() {
