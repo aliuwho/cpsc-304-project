@@ -1,12 +1,27 @@
 
 <?php
 
+function printEverySeverity($result)
+{ //prints users
+    echo "<br>Users who have received flags of every severity:<br>";
+    echo "<table>";
+    echo "<tr><th>Name</th></tr>";
+
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<tr><td>" . $row["NAME"];
+    }
+
+    echo "</table>";
+}
+
 function handleEverySeverityRequest()
 {
     global $db_conn;
-    executePlainSQL("SELECT a.id FROM account a WHERE not exists
+    executePlainSQL("SELECT a.name FROM account a WHERE not exists
     ( (select f1.f_severity from flag f1) MINUS
       (select f2.f_severity from flag f2 where f2.aid = a.id) )");
+
+    echo "<br>" . printEverySeverity($result) . "<br>";
 }
 
 function handleResolveTicketRequest()

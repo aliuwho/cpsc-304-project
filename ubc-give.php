@@ -88,12 +88,12 @@
 
 
         <?php 
-        include "./krish-remaining-queries.html";
         include "./louise-queries.html";
         include "./amy-queries.html";
-        include "./krish-php.php";
+        include "./krish-remaining-queries.html";
         include "./louise-php.php";
         include "./amy-php.php";
+        include "./krish-php.php";
         
         $success = True; //keep track of errors so it redirects the page only if there are no errors
         $db_conn = NULL; // edit the login credentials in connectToDB()
@@ -504,6 +504,8 @@
                     handleViewPopularCategoriesRequest();
                 } else if (array_key_exists('listingInfoRequest', $_GET)) {
                     handleListingInfoRequest();
+                } else if (array_key_exists('everySeverityRequest', $_GET)) {
+                    handleEverySeverityRequest();
                 }
 
                 disconnectFromDB();
@@ -549,7 +551,8 @@
         || isset($_GET['countRequestF'])
         || isset($_GET['viewEmptyCategoriesRequest']) ||  isset($_GET['viewRequestsByCategoryRequest'])
         ||  isset($_GET['viewCategoryCountRequest']) ||   isset($_GET['viewPopularCategoriesRequest'])
-        ||  isset($_GET['listingInfoRequest']) || isset($_GET['listingInfoSubmit'])) {
+        ||  isset($_GET['listingInfoRequest']) || isset($_GET['listingInfoSubmit'])
+        || isset($_GET['everySeverityRequest'])) {
             handleGETRequest();
         } else if (isset($_POST['deleteLocationSubmit']) || isset($_POST['deleteAccountSubmit']) || isset($_POST['deleteListingSubmit'])) {
             handleDELETERequest();
