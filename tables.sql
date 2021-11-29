@@ -28,7 +28,7 @@ CREATE TABLE Moderator (
         PRIMARY KEY(id),
         welcome_message VARCHAR(100) DEFAULT 'Welcome, dear moderator!',
         promotion_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY(id) REFERENCES Account
+        FOREIGN KEY(id) REFERENCES Account ON DELETE CASCADE
 );
 CREATE TABLE Ticket (
         tid INTEGER,
@@ -39,8 +39,8 @@ CREATE TABLE Ticket (
         t_priority INTEGER DEFAULT 0,
         created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(tid),
-        FOREIGN KEY(aid) REFERENCES Account,
-        FOREIGN KEY(mid) REFERENCES Moderator
+        FOREIGN KEY(aid) REFERENCES Account ON DELETE CASCADE,
+        FOREIGN KEY(mid) REFERENCES Moderator ON DELETE CASCADE
 );
 create table Flag (
         f_id Integer,
@@ -48,8 +48,8 @@ create table Flag (
         f_description VARCHAR(200),
         aid INTEGER NOT NULL,
         mid INTEGER NOT NULL,
-        FOREIGN KEY(aid) REFERENCES Account,
-        FOREIGN KEY(mid) REFERENCES Moderator,
+        FOREIGN KEY(aid) REFERENCES Account ON DELETE CASCADE,
+        FOREIGN KEY(mid) REFERENCES Moderator ON DELETE CASCADE,
         PRIMARY KEY(f_id)
 );
 create table Broadcast (
@@ -65,15 +65,15 @@ create table Review (
         r_description VARCHAR(200),
         r_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(r_id, receiver_id),
-        FOREIGN KEY(receiver_id) REFERENCES Account,
-        FOREIGN KEY(poster_id) REFERENCES Account
+        FOREIGN KEY(receiver_id) REFERENCES Account ON DELETE CASCADE,
+        FOREIGN KEY(poster_id) REFERENCES Account ON DELETE CASCADE
 );
 create table Receives (
         b_id INTEGER not NULL,
         a_id INTEGER not NULL,
         PRIMARY KEY(b_id, a_id),
-        FOREIGN KEY(b_id) REFERENCES Broadcast,
-        FOREIGN KEY(a_id) REFERENCES Account
+        FOREIGN KEY(b_id) REFERENCES Broadcast ON DELETE CASCADE,
+        FOREIGN KEY(a_id) REFERENCES Account ON DELETE CASCADE
 );
 CREATE TABLE Category (name VARCHAR(20) PRIMARY KEY NOT NULL);
 CREATE TABLE Post (
@@ -85,13 +85,13 @@ CREATE TABLE Post (
         expiration TIMESTAMP NOT NULL,
         post_status VARCHAR(15) NOT NULL,
         PRIMARY KEY(post_id),
-        FOREIGN KEY (account_id) REFERENCES Account
+        FOREIGN KEY (account_id) REFERENCES Account ON DELETE CASCADE
 );
 CREATE TABLE Listing (
         post_id INTEGER,
         item VARCHAR(50) NOT NULL,
         PRIMARY KEY(post_id),
-        FOREIGN KEY(post_id) REFERENCES Post
+        FOREIGN KEY(post_id) REFERENCES Post ON DELETE CASCADE
 );
 CREATE TABLE Request (
         post_id INTEGER NOT NULL,
@@ -100,8 +100,8 @@ CREATE TABLE Request (
         fulfilled_on TIMESTAMP,
         fulfilled_id INTEGER DEFAULT 0,
         PRIMARY KEY(post_id),
-        FOREIGN KEY(post_id) REFERENCES Post,
-        FOREIGN KEY(fulfilled_id) REFERENCES Account
+        FOREIGN KEY(post_id) REFERENCES Post ON DELETE CASCADE,
+        FOREIGN KEY(fulfilled_id) REFERENCES Account ON DELETE CASCADE
 );
 CREATE TABLE Bid (
         id INTEGER,
@@ -110,15 +110,15 @@ CREATE TABLE Bid (
         aid INTEGER NOT NULL,
         chosen INTEGER DEFAULT 0,
         PRIMARY KEY(id),
-        FOREIGN KEY(aid) REFERENCES Account,
-        FOREIGN KEY(lid) REFERENCES Listing
+        FOREIGN KEY(aid) REFERENCES Account ON DELETE CASCADE,
+        FOREIGN KEY(lid) REFERENCES Listing ON DELETE CASCADE
 );
 CREATE TABLE BelongsTo (
         post_id INTEGER NOT NULL,
         category VARCHAR(20) NOT NULL,
         PRIMARY KEY(post_id, category),
-        FOREIGN KEY(post_id) REFERENCES Post,
-        FOREIGN KEY(category) REFERENCES Category
+        FOREIGN KEY(post_id) REFERENCES Post ON DELETE CASCADE,
+        FOREIGN KEY(category) REFERENCES Category ON DELETE CASCADE
 );
 CREATE TABLE LocationAddress (
         streetname VARCHAR(30) NOT NULL,
@@ -132,13 +132,13 @@ CREATE TABLE Pickup (
         streetname NOT NULL,
         streetno NOT NULL,
         PRIMARY KEY(pickupid),
-        FOREIGN KEY(streetname, streetno) REFERENCES LocationAddress
+        FOREIGN KEY(streetname, streetno) REFERENCES LocationAddress ON DELETE CASCADE
 );
 CREATE TABLE Suggests (
         post_id INTEGER,
         pickup_id INTEGER,
         suggested_time TIMESTAMP,
         PRIMARY KEY(post_id, pickup_id, suggested_time),
-        FOREIGN KEY(post_id) REFERENCES Post,
-        FOREIGN KEY(pickup_id) REFERENCES Pickup
+        FOREIGN KEY(post_id) REFERENCES Post ON DELETE CASCADE,
+        FOREIGN KEY(pickup_id) REFERENCES Pickup ON DELETE CASCADE
 );
